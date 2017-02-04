@@ -88,7 +88,7 @@ papers:
       image : /images/babi.png
 
     - title: ______________
-      authors :_______________
+      authors : _______________
       conference : Proceedings of ACL 2015. 
       pdf : http://people.seas.harvard.edu/~srush/acl15.pdf
       code : https://github.com/swiseman/nn_coref
@@ -96,14 +96,14 @@ papers:
       image : /images/acl15.png
 
     - title: _____________________
-      authors:______________
+      authors: ______________
       conference : Proceedings of ICML 2015.
       code : https://github.com/srush/MRF-LM/
       slides : http://people.seas.harvard.edu/~srush/ICMLpresentationFinalNoAnimation.pdf
       pdf : http://people.seas.harvard.edu/~srush/icml15.pdf
       image : /images/icml15.png
 
-    - title:________________
+    - title: ________________
       authors: _____________
       conference: Proceedings of NAACL 2015. 
       slides: http://people.seas.harvard.edu/~srush/naacl_poster.pdf
