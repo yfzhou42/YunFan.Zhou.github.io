@@ -1,1 +1,0 @@
-# marikgoldstein.github.io
