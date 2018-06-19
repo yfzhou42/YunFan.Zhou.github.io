@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<title>ELBO Surgery</title>
+	
+	<meta name="description" content="">
+	<meta name="image" content="">
+	
+	<meta itemprop="name" content="ELBO Surgery">
+	<meta itemprop="description" content="">
+	<meta itemprop="image" content="">
+	
+	<meta name="og:title" content="ELBO Surgery">
+	<meta name="og:description" content="">
+	
+	<meta name="og:url" content="https://rachitsingh.com/elbo_surgery/">
+	<meta name="og:site_name" content="ELBO Surgery">
+	<meta name="og:type" content="article">
+	
+	<meta name="article:author" content="Rachit Singh">
+	<meta name="article:tag" content="papers ">
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha2/katex.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha2/katex.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha2/contrib/auto-render.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700" rel="stylesheet">
+</head>
+
+<body>
+
+
+
+<div id="loadingMask" style="width: 100%; height: 100%; position: fixed; background: #fff;"></div>
+<script>
+function fadeOut(el) {
+  el.style.opacity = 1;
+
+  var last = +new Date();
+  var tick = function() {
+    el.style.opacity = +el.style.opacity - (new Date() - last) / 80;
+    last = +new Date();
+    
+
+    if (el.style.opacity > 0) {
+      (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+    } else {
+    	el.style.display='none';
+    }
+  };
+
+  tick();
+}
+
+function ready(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+         el = document.getElementById('loadingMask');
+         fadeOut(el);
+        var elements = document.querySelectorAll("img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("alt")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("alt"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+
+    } else {
+        document.addEventListener('DOMContentLoaded', fn);
+    }
+}
+window.onload = ready;
+</script>
+
+<div class="content">
+	<h1>ELBO Surgery <aside><a href="/" class="w3-tag">home</a>&nbsp;&nbsp;&nbsp;</aside></h1>
+	<style>
+td { 
+  padding: 5px;
+  font-family: monospace;
+  font-size: 1.25rem;
+}
+th {
+  text-align: center;
+  padding: 0px 5px;
+}
+th.left_column {
+  text-align: right;
+}
+figure { 
+  margin: 0px 20px;
+  max-width: 50rem;
+}
+img[src*="#smaller"] {
+  width: 50%;
+  margin: auto;
+}
+</style>
+
+<p><strong>tldr: The ubiquitous isotropic Gaussian prior for generative models doesn't make sense / doesn't work, which motivates work on priors.</strong></p>
+
+<p>At NIPS, Dawen Liang mentioned Hoffman &amp; Johnson's <a href="http://approximateinference.org/accepted/HoffmanJohnson2016.pdf">ELBO surgery</a> paper offhand while talking about tuning KL divergences, and it's very interesting, so I thought I'd go over it. It's very clearly written, so I won't go into any of the derivations, but instead offer my interpretation.</p>
+
+<h3 id="motivation">Motivation</h3>
+
+<p>I worked in the past on applying variational inference and comparing it to models trained via MAP/MLE inference. I decomposed the evidence lower bound (ELBO) as:</p>
+
+<p><span  class="math">\[\mathcal{L} = \frac{1}{N}\sum_{i = 1}^N\left(\underbrace{\mathbb{E}_{q(z_n | x_n)}[\log p(x_n | z_n)]}_{\text{log-likelihood}} - \underbrace{\operatorname{KL}(q(z_n | x_n) || p(z_n))}_{\text{KL divergence}}\right)\]</span></p>
+
+<p>This is, I think, the most common interpretation: split the ELBO into a reconstruction term and a KL divergence term. The first encourages the model to reconstruct the data, and the second <em>regularizes</em> the model, asking the posterior distribution over <span  class="math">\(z_n\)</span> to have a certain shape, like a Gaussian. For example, in a VAE the second term is what prevents the model from just learning a Dirac delta-like posterior <span  class="math">\(q(z_n | x_n) \sim \mathcal{N}(x_n, 0.001)\)</span> around the original value<sup class="footnote-ref" id="fnref:1"><a class="footnote" href="#fn:1">1</a></sup>.</p>
+
+<p>In the NLP world, people have seen some problems though - when we have a very powerful generative model (e.g., an RNN), the KL divergence can vanish. This means the posterior <span  class="math">\(q(z_n | x_n) \approx p(z_n)\)</span> <em>learns nothing</em> about the data, so the generative model <span  class="math">\(p(x_n | z_n)\)</span> becomes like a language model. The usual trick is to anneal the KL divergence term in, so that that inference can be useful. A lot of people are unhappy with this because it adds extra hyperparameters and it feels really non-Bayesian.</p>
+
+<h3 id="contribution">Contribution</h3>
+
+<p>The contribution of this paper is the following observation: the KL divergence above measures the distance from the posterior for a single <span  class="math">\(z_n\)</span> to the prior, but we really care about the KL divergence from the average posterior over all data points to the prior. So they define</p>
+
+<p><span  class="math">\[q(z) = \frac{1}{N}\sum_{n = 1}^Nq(z_n | x_n)\]</span></p>
+
+<p>which is the <em>average</em> posterior we see. The intuition here is that when we're trying to do inference, we shouldn't exactly be penalized for being very confident in <span  class="math">\(q(z_n | x_n)\)</span>. However, we want the <em>average</em> distribution to be close to the prior, so this term can go to 0 safely without worrying about whether the posterior has learned something. In fact, at the cost of a lot of extra computation, we can even safely set the prior to be this distribution, or let <span  class="math">\(p(z) \triangleq q(z)\)</span>!
+<figure><img src="/figure_1.png" alt="" title="The average distribution. On the left, we see a confident posterior over the latent variable corresponding to a point, which is penalized. On the right we see the &lt;em&gt;average&lt;/em&gt; posterior with two points. "><figcaption>The average distribution. On the left, we see a confident posterior over the latent variable corresponding to a point, which is penalized. On the right we see the <em>average</em> posterior with two points. </figcaption></figure>
+<figure><img src="/figure_2.png#smaller" alt="" title="The average distribution over 10 data points. This corresponds much better to the prior, as we'd hope."><figcaption>The average distribution over 10 data points. This corresponds much better to the prior, as we'd hope.</figcaption></figure></p>
+
+<p>Then, they view <span  class="math">\(n\)</span>, the index variable, as a random variable, where the interpretation is that our generative model samples <span  class="math">\(n \sim \operatorname{Unif}[N]\)</span>, and then picks a <span  class="math">\(z_n\)</span> from <span  class="math">\(p(z)\)</span>. This isn't totally intuitive, but it makes more sense on the inference side, which we'll see below. Finally, they decompose the second term further as follows:</p>
+
+<p><span  class="math">\[\mathcal{L} = \underbrace{\frac{1}{N}\sum_{i = 1}^N E_{q(z_n | x_n)}[\log p(x_n | z_n)]}_{\text{log-likelihood}} - \underbrace{\vphantom{\sum_{i = 1}^N}E_{q(z)}[\operatorname{KL}(q(n | z) || p(n)))]}_{\text{index-code mutual information}} - \underbrace{\vphantom{\sum_{i = 1}^N}\operatorname{KL}(q(z) || p(z))}_{\text{marginal KL}}\]</span></p>
+
+<p>(this is not an obvious derivation, but the math checks out). Here, <span  class="math">\(q(n | z)\)</span> (which we can decompose using Bayes' law) can be interpreted as 'the distribution over which datapoint this <span  class="math">\(z\)</span> belongs to'. The description 'index-code mutual information' comes from an alternative way to write the expression, but I like this one more. Also, they upper bound this value by <span  class="math">\(\log N\)</span>, a not insignificant quantity! This is 11 nats on MNIST.</p>
+
+<h3 id="experiments">Experiments</h3>
+
+<p>Finally, the most interesting section, which is the quantitative analysis: they apply the model to a set of the usual VAEs with an isotropic Gaussian prior used for binarized MNIST, and get the following results:</p>
+
+<table style='max-width: 50rem'>
+  <tr>
+    <th></th>
+    <th>ELBO</th>
+    <th>Average KL</th>
+    <th>Mutual info.</th>
+    <th>Marginal KL</th>
+  </tr>
+  <tr>
+    <th class="left_column">2D latents</th>
+    <td>-129.63</td>
+    <td>7.41</td>
+    <td>7.20</td>
+    <td>0.21</td>
+  </tr>
+    <tr>
+    <th class="left_column">10D latents</th>
+    <td>-88.95</td>
+    <td>19.17</td>
+    <td>10.82</td>
+    <td>8.35</td>
+  </tr>
+    <tr>
+    <th class="left_column">20D latents</th>
+    <td>-87.45</td>
+    <td>20.2</td>
+    <td>10.67</td>
+    <td>9.53</td>
+  </tr>
+</table>
+
+<p>So, what's going on is that as we increase the number of latent dimensions to 10/20, the marginal KL gets large! Which means that <em>the Gaussian prior is not good enough anymore</em>. At least, that is my interpretation. This is interesting food for thought, since that gives a lot of evidence for a hunch that people have had for a while (and motivates work on new prior distributions, like <a href="http://rachitsingh.com/ibp_dgm.pdf">our paper</a>).</p>
+<div class="footnotes">
+
+<hr>
+
+<ol>
+<li id="fn:1">Well, if the latent capacity is large enough. Otherwise it might learn, e.g. a PCA-like compression, or some other compression if the inference and generation nets are more crazy.
+ <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
+</ol>
+</div>
+
+</div>
+
+
+<footer>
+
+	<p><small><em>Written December 23, 2017. </em>
+		 
+		Send feedback to <a  href="mailto:rachitsingh@college.harvard.edu">the author</a>.
+		
+	</small></p>
+
+	<p>
+	<a href="/nips/">← NIPS 2017</a>&nbsp;
+	<a href="/pytorch-internals-curand-and-numerical-instability/" style="float:right;">PyTorch Internals, cuRAND, and numerical instability →</a>
+	</p>
+
+
+</footer>
+
+
+
+
+<script>renderMathInElement(document.body);</script>
+</body>
+</html>

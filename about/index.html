@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<title>About</title>
+	
+	<meta name="description" content="">
+	<meta name="image" content="">
+	
+	<meta itemprop="name" content="About">
+	<meta itemprop="description" content="">
+	<meta itemprop="image" content="">
+	
+	<meta name="og:title" content="About">
+	<meta name="og:description" content="">
+	
+	<meta name="og:url" content="https://rachitsingh.com/about/">
+	<meta name="og:site_name" content="About">
+	<meta name="og:type" content="article">
+	
+	<meta name="article:author" content="Rachit Singh">
+	<meta name="article:tag" content="">
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha2/katex.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha2/katex.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha2/contrib/auto-render.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700" rel="stylesheet">
+</head>
+
+<body>
+
+
+
+<div id="loadingMask" style="width: 100%; height: 100%; position: fixed; background: #fff;"></div>
+<script>
+function fadeOut(el) {
+  el.style.opacity = 1;
+
+  var last = +new Date();
+  var tick = function() {
+    el.style.opacity = +el.style.opacity - (new Date() - last) / 80;
+    last = +new Date();
+    
+
+    if (el.style.opacity > 0) {
+      (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+    } else {
+    	el.style.display='none';
+    }
+  };
+
+  tick();
+}
+
+function ready(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+         el = document.getElementById('loadingMask');
+         fadeOut(el);
+        var elements = document.querySelectorAll("img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("alt")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("alt"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+
+    } else {
+        document.addEventListener('DOMContentLoaded', fn);
+    }
+}
+window.onload = ready;
+</script>
+
+<div class="content">
+	<h1>About <aside><a href="/" class="w3-tag">home</a>&nbsp;&nbsp;&nbsp;</aside></h1>
+	<p>I&rsquo;m Rachit Singh, and I&rsquo;m a senior at Harvard, doing research in variational inference, Indian Buffet
+processes, and language models. I work with <a href="http://people.seas.harvard.edu/~srush/">Alexander Rush</a>,
+<a href="https://finale.seas.harvard.edu/">Finale Doshi-Velez</a>, and I&rsquo;m part of the
+<a href="http://nlp.seas.harvard.edu/">Harvard NLP</a> research group. I frequently work with
+<a href="http://jeffreyling.github.io/">Jeffrey Ling</a>.</p>
+
+<p>I&rsquo;m very interested in probabilistic programs, especially those like <a href="https://www.edwardlib.org">Edward</a>, and I&rsquo;m hoping to help build <a href="https://pyro.ai">Pyro</a> to be just as powerful, once I understand how it works. I like to write very fast code (I have a bit of CUDA + RTOS microcontroller work under my belt) in a variety of languages. Mostly these days that involves writing neural networks in PyTorch or Tensorflow, though I prefer to be Bayesian when possible.</p>
+
+</div>
+
+
+<footer>
+
+
+</footer>
+
+
+
+
+<script>renderMathInElement(document.body);</script>
+</body>
+</html>
