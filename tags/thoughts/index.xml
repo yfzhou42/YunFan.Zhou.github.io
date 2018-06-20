@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Thoughts on Rachit Singh</title>
+    <link>https://rachitsingh.com/tags/thoughts/</link>
+    <description>Recent content in Thoughts on Rachit Singh</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 09 Dec 2017 00:47:37 -0800</lastBuildDate>
+    
+	<atom:link href="https://rachitsingh.com/tags/thoughts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>NIPS 2017</title>
+      <link>https://rachitsingh.com/nips/</link>
+      <pubDate>Sat, 09 Dec 2017 00:47:37 -0800</pubDate>
+      
+      <guid>https://rachitsingh.com/nips/</guid>
+      <description>I&#39;m starting this blog to share research ideas that I have, and some solutions to problems I find along the way. I&#39;ve been helped immensely by other people&#39;s blogs in the past, and want to do the same. Also it&#39;ll give me a chance to communicate the way I approach problems, and hopefully people will give me alternative perspectives either by email (rachitsingh@college.harvard.edu) or in the comments, once I figure out how that works.</description>
+    </item>
+    
+    <item>
+      <title>Ideas</title>
+      <link>https://rachitsingh.com/ideas/</link>
+      <pubDate>Fri, 08 Dec 2017 15:41:37 -0800</pubDate>
+      
+      <guid>https://rachitsingh.com/ideas/</guid>
+      <description>Ideas for libraries (so that people can use this stuff quickly)
+ Implement a discrete Poisson distribution using RELAX/REBAR and/or the TRE. Reimplement the CUDA code for unbiased MCMC so that it&amp;rsquo;s PyTorch based, if that&amp;rsquo;s possible. That way we can let people define arbitrary likelihoods and still get coupled kernels. Maybe use CuPy as a glue language, though if the PyTorch story for external modules gets better then this shouldn&amp;rsquo;t be an issue.</description>
+    </item>
+    
+  </channel>
+</rss>

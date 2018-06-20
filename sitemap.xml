@@ -3,17 +3,82 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://example.org/categories/</loc>
+    <loc>https://rachitsingh.com/the-langevin-equation/</loc>
+    <lastmod>2018-04-22T18:57:21-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://rachitsingh.com/persistence-length/</loc>
+    <lastmod>2018-04-22T10:52:54-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://rachitsingh.com/a-few-favorite-papers-of-2017/</loc>
+    <lastmod>2018-01-09T12:48:10-08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://rachitsingh.com/pytorch-internals-curand-and-numerical-instability/</loc>
+    <lastmod>2018-01-03T18:44:27-08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://rachitsingh.com/elbo_surgery/</loc>
+    <lastmod>2017-12-23T12:08:00-08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://rachitsingh.com/links/</loc>
+    <lastmod>2017-12-14T16:55:26-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://rachitsingh.com/nips/</loc>
+    <lastmod>2017-12-09T00:47:37-08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://rachitsingh.com/ideas/</loc>
+    <lastmod>2017-12-08T15:41:37-08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://rachitsingh.com/about/</loc>
+    <lastmod>2017-12-07T18:14:16-08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://rachitsingh.com/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/</loc>
+    <loc>https://rachitsingh.com/tags/papers/</loc>
+    <lastmod>2017-12-23T12:08:00-08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/tags/</loc>
+    <loc>https://rachitsingh.com/posts/</loc>
+    <lastmod>2018-04-22T18:57:21-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://rachitsingh.com/</loc>
+    <lastmod>2018-04-22T18:57:21-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://rachitsingh.com/tags/</loc>
+    <lastmod>2017-12-23T12:08:00-08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://rachitsingh.com/tags/thoughts/</loc>
+    <lastmod>2017-12-09T00:47:37-08:00</lastmod>
     <priority>0</priority>
   </url>
   
