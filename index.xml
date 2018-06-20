@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rachit Singh</title>
+    <link>https://rachitsingh.com/</link>
+    <description>Recent content on Rachit Singh</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 22 Apr 2018 18:57:21 -0400</lastBuildDate>
+    
+	<atom:link href="https://rachitsingh.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The Langevin Equation</title>
+      <link>https://rachitsingh.com/the-langevin-equation/</link>
+      <pubDate>Sun, 22 Apr 2018 18:57:21 -0400</pubDate>
+      
+      <guid>https://rachitsingh.com/the-langevin-equation/</guid>
+      <description>This post covers the Langevin equation, a stochastic differential equation that models the dynamics of particles in Brownian motion 1. This covers the ideas used in this reference due to Lennart Sjögren.
+Langevin Equation In 1907 Einstein published a paper that derived a macroscopic quantity \(D\), the diffusion constant, with microscopic quantities:
+\[D = \frac{k_BT}{6\pi\eta a}\]
+where \(\eta\) is the viscosity of the liquid and \(a\) is the radius of the particle.</description>
+    </item>
+    
+    <item>
+      <title>Persistence Length</title>
+      <link>https://rachitsingh.com/persistence-length/</link>
+      <pubDate>Sun, 22 Apr 2018 10:52:54 -0400</pubDate>
+      
+      <guid>https://rachitsingh.com/persistence-length/</guid>
+      <description>td { padding: 5px; font-family: monospace; font-size: 1.25rem; } th { text-align: center; padding: 0px 5px; } th.left_column { text-align: right; } figure { margin: 0px 20px; max-width: 50rem; } img[src*=&#34;#smaller&#34;] { width: 65%; margin: auto; margin-bottom: 15px; }  In class we recently discussed the simplified elastic rod model for polymers, which assumes that polymers can be modeled as an inextensible rod, i.e. that the length of the rod doesn&#39;t change, and that the twist of the polymer is ignorable (possibly because the polymer is joined by single bonds).</description>
+    </item>
+    
+    <item>
+      <title>A few favorite papers of 2017</title>
+      <link>https://rachitsingh.com/a-few-favorite-papers-of-2017/</link>
+      <pubDate>Tue, 09 Jan 2018 12:48:10 -0800</pubDate>
+      
+      <guid>https://rachitsingh.com/a-few-favorite-papers-of-2017/</guid>
+      <description>This isn&#39;t an exhaustive list, and I will inevitably forget some papers. I&#39;ll keep updating as a remember, and will probably expand some of the background/contribution sections as I have time, so that they&#39;re more accessible.
+Breaking the Softmax Bottleneck: A High-Rank RNN Language Model [link] Background: Language models and NLP tasks almost always use a softmax to compute a distribution over the vocabulary, and usually this is computed as \(\sigma(\mathbf{W}\mathbf{h})\), where \(\mathbf{h}\) is a \(d\)-dimensional context vector from a previous layer, and \(\mathbf{W} \in \mathbb{R}^{M \times d}\) is a word embedding, letting $M$ be the vocabulary size.</description>
+    </item>
+    
+    <item>
+      <title>PyTorch Internals, cuRAND, and numerical instability</title>
+      <link>https://rachitsingh.com/pytorch-internals-curand-and-numerical-instability/</link>
+      <pubDate>Wed, 03 Jan 2018 18:44:27 -0800</pubDate>
+      
+      <guid>https://rachitsingh.com/pytorch-internals-curand-and-numerical-instability/</guid>
+      <description>Random sampling I&#39;ve been working lately to implement random samplers from a number of distributions in PyTorch, both on CPU and CUDA. This is a topic near and dear to my heart, since it has caused me a lot of trouble multiple times. Once this PR is merged, I&#39;ll post an explanation/notebook of why this is important.
+Here&#39;s a brief summary of the motivation:
+ We want to sample from distributions like \(\operatorname{Beta}(a, b)\).</description>
+    </item>
+    
+    <item>
+      <title>ELBO Surgery</title>
+      <link>https://rachitsingh.com/elbo_surgery/</link>
+      <pubDate>Sat, 23 Dec 2017 12:08:00 -0800</pubDate>
+      
+      <guid>https://rachitsingh.com/elbo_surgery/</guid>
+      <description>td { padding: 5px; font-family: monospace; font-size: 1.25rem; } th { text-align: center; padding: 0px 5px; } th.left_column { text-align: right; } figure { margin: 0px 20px; max-width: 50rem; } img[src*=&#34;#smaller&#34;] { width: 50%; margin: auto; }  tldr: The ubiquitous isotropic Gaussian prior for generative models doesn&#39;t make sense / doesn&#39;t work, which motivates work on priors.
+At NIPS, Dawen Liang mentioned Hoffman &amp;amp; Johnson&#39;s ELBO surgery paper offhand while talking about tuning KL divergences, and it&#39;s very interesting, so I thought I&#39;d go over it.</description>
+    </item>
+    
+    <item>
+      <title>Links</title>
+      <link>https://rachitsingh.com/links/</link>
+      <pubDate>Thu, 14 Dec 2017 16:55:26 -0500</pubDate>
+      
+      <guid>https://rachitsingh.com/links/</guid>
+      <description>Here are some useful links I&amp;rsquo;ve found:
+LaTeX  A tikz-cd graphical editor that I wish I&amp;rsquo;d during 55&amp;hellip; - http://tikzcd.yichuanshen.de/ For high power Bayesian diagrams, I like tikz-bayesnet, but honestly it&amp;rsquo;s often not worth the trouble vs. using tikz-cd and adding a circle macro. ShareLaTeX is quite useful for collaborating, and open source. One day when I have time I&amp;rsquo;ll make a PR&amp;hellip;  Vim  My dotfiles are here: http://github.</description>
+    </item>
+    
+    <item>
+      <title>NIPS 2017</title>
+      <link>https://rachitsingh.com/nips/</link>
+      <pubDate>Sat, 09 Dec 2017 00:47:37 -0800</pubDate>
+      
+      <guid>https://rachitsingh.com/nips/</guid>
+      <description>I&#39;m starting this blog to share research ideas that I have, and some solutions to problems I find along the way. I&#39;ve been helped immensely by other people&#39;s blogs in the past, and want to do the same. Also it&#39;ll give me a chance to communicate the way I approach problems, and hopefully people will give me alternative perspectives either by email (rachitsingh@college.harvard.edu) or in the comments, once I figure out how that works.</description>
+    </item>
+    
+    <item>
+      <title>Ideas</title>
+      <link>https://rachitsingh.com/ideas/</link>
+      <pubDate>Fri, 08 Dec 2017 15:41:37 -0800</pubDate>
+      
+      <guid>https://rachitsingh.com/ideas/</guid>
+      <description>Ideas for libraries (so that people can use this stuff quickly)
+ Implement a discrete Poisson distribution using RELAX/REBAR and/or the TRE. Reimplement the CUDA code for unbiased MCMC so that it&amp;rsquo;s PyTorch based, if that&amp;rsquo;s possible. That way we can let people define arbitrary likelihoods and still get coupled kernels. Maybe use CuPy as a glue language, though if the PyTorch story for external modules gets better then this shouldn&amp;rsquo;t be an issue.</description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>https://rachitsingh.com/about/</link>
+      <pubDate>Thu, 07 Dec 2017 18:14:16 -0800</pubDate>
+      
+      <guid>https://rachitsingh.com/about/</guid>
+      <description>I&amp;rsquo;m Rachit Singh, and I&amp;rsquo;m a senior at Harvard, doing research in variational inference, Indian Buffet processes, and language models. I work with Alexander Rush, Finale Doshi-Velez, and I&amp;rsquo;m part of the Harvard NLP research group. I frequently work with Jeffrey Ling.
+I&amp;rsquo;m very interested in probabilistic programs, especially those like Edward, and I&amp;rsquo;m hoping to help build Pyro to be just as powerful, once I understand how it works. I like to write very fast code (I have a bit of CUDA + RTOS microcontroller work under my belt) in a variety of languages.</description>
+    </item>
+    
+  </channel>
+</rss>

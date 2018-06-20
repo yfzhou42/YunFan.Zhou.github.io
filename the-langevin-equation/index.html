@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<title>The Langevin Equation</title>
+	
+	<meta name="description" content="">
+	<meta name="image" content="">
+	
+	<meta itemprop="name" content="The Langevin Equation">
+	<meta itemprop="description" content="">
+	<meta itemprop="image" content="">
+	
+	<meta name="og:title" content="The Langevin Equation">
+	<meta name="og:description" content="">
+	
+	<meta name="og:url" content="https://rachitsingh.com/the-langevin-equation/">
+	<meta name="og:site_name" content="The Langevin Equation">
+	<meta name="og:type" content="article">
+	
+	<meta name="article:author" content="Rachit Singh">
+	<meta name="article:tag" content="">
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha2/katex.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha2/katex.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha2/contrib/auto-render.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700" rel="stylesheet">
+</head>
+
+<body>
+
+
+
+<div id="loadingMask" style="width: 100%; height: 100%; position: fixed; background: #fff;"></div>
+<script>
+function fadeOut(el) {
+  el.style.opacity = 1;
+
+  var last = +new Date();
+  var tick = function() {
+    el.style.opacity = +el.style.opacity - (new Date() - last) / 80;
+    last = +new Date();
+    
+
+    if (el.style.opacity > 0) {
+      (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+    } else {
+    	el.style.display='none';
+    }
+  };
+
+  tick();
+}
+
+function ready(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+         el = document.getElementById('loadingMask');
+         fadeOut(el);
+        var elements = document.querySelectorAll("img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("alt")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("alt"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+
+    } else {
+        document.addEventListener('DOMContentLoaded', fn);
+    }
+}
+window.onload = ready;
+</script>
+
+<div class="content">
+	<h1>The Langevin Equation <aside><a href="/" class="w3-tag">home</a>&nbsp;&nbsp;&nbsp;</aside></h1>
+	<p>This post covers the <a href="https://en.wikipedia.org/wiki/Langevin_equation">Langevin equation</a>, a stochastic differential equation that models the dynamics of particles in Brownian motion <sup class="footnote-ref" id="fnref:1"><a class="footnote" href="#fn:1">1</a></sup>. This covers the ideas used in <a href="http://physics.gu.se/~frtbm/joomla/media/mydocs/LennartSjogren/kap6.pdf">this reference</a> due to Lennart Sjögren.</p>
+
+<h2 id="langevin-equation">Langevin Equation</h2>
+
+<p>In 1907 Einstein published a paper that derived a <em>macroscopic quantity</em> <span  class="math">\(D\)</span>, the diffusion constant, with <em>microscopic quantities</em>:</p>
+
+<p><span  class="math">\[D = \frac{k_BT}{6\pi\eta a}\]</span></p>
+
+<p>where <span  class="math">\(\eta\)</span> is the viscosity of the liquid and <span  class="math">\(a\)</span> is the radius of the particle. In 1908 Langevin <a href="https://www.physik.uni-augsburg.de/theo1/hanggi/History/Langevin1908.pdf">derived the same result</a> using Stoke's law to note that the drag on a particle is <span  class="math">\(\gamma = 6\pi \eta a\)</span>, so that we can write the equations of motion as:</p>
+
+<p><span  class="math">\[m\frac{d^2x}{dt^2} = -\gamma \frac{dx}{dt} + \xi\]</span></p>
+
+<p>for some noisy force <span  class="math">\(\xi\)</span>. The argument, which is given in the linked paper, relies on the fact that we can multiply by <span  class="math">\(x\)</span>, and take the average over all the particles. This gives us a term <span  class="math">\(\overline{\xi x}\)</span>, which Langevin claimed is 0. This 'averaging' lets him work in variance-space, which leads to a result about the second moment of the group of particles: <span  class="math">\(\overline{x^2} - \overline{x_0^2} = 2Dt\)</span>, using Einstein's <span  class="math">\(D\)</span>, which is the the same as the definition of <span  class="math">\(D\)</span>. The averaging procedure is a bit sketchy, and <a href="https://arxiv.org/pdf/physics/0502141.pdf">some people</a> have noted the handwave. Our goal is to put this on a surer footing.</p>
+
+<h2 id="stochastic-differential-equations">Stochastic Differential Equations</h2>
+
+<p>An ordinary differential equation might look like <span  class="math">\(y'(t) = f(y(t))\)</span>, or <span  class="math">\(dy(t) = f(y(t)) dt\)</span> in differential form. If we want to model a process with <em>noise</em>, we might add a Brownian motion increment <span  class="math">\(\sigma dB_t\)</span> to get:</p>
+
+<p><span  class="math">\[
+\begin{aligned}
+dy_t &= f(y(t))dt + \sigma dB_t \\
+y_t &= \int_0^t f(y(t)) dt + \sigma B_t
+\end{aligned}
+\]</span></p>
+
+<p>This is a regular integral because <span  class="math">\(\sigma\)</span> doesn't depend on time, but the end result is a stochastic process (i.e. a collection of random variables indexed here by time). We can of course generalize this as much as we'd like, including letting <span  class="math">\(\sigma\)</span> be a function of <span  class="math">\(y\)</span> or <span  class="math">\(t\)</span>, which would necessitate a stochastic integral, but luckily we don't need to just yet (that'll come later).</p>
+
+<p>In our case, we can write the Langevin equation as:</p>
+
+<p><span  class="math">\[
+\begin{aligned}
+\frac{dx_t}{dt} &= v_t \\
+\frac{dv_t}{dt} &= -\frac{\gamma}{m}v_t + \frac{1}{m}\xi_t \\
+\implies dv_t &= -\frac{\gamma}{m}v_t dt + \frac{1}{m}\xi_t dt
+\end{aligned}
+\]</span></p>
+
+<p>In application, we can note the following facts: <span  class="math">\(\mathbb{E}[\xi(t)] = 0\)</span>, and <span  class="math">\(\mathbb{E}[\xi(t_1)\xi(t_2)] = g\delta(t_1 - t_2)\)</span>. The first statement says that the force has 0 mean. The second says that it is totally uncorrelated with some variance <span  class="math">\(g\)</span> at any given point. This assumption is realistic because the particles considered are being hit by other particles many billions of times a second. Finally, we can make the (fairly strong) assumption that the force applied at each time comes from a Gaussian distribution with the moments implied by the previous facts<sup class="footnote-ref" id="fnref:2"><a class="footnote" href="#fn:2">2</a></sup>.</p>
+
+<p>Then, <span  class="math">\(\xi(t)\)</span> satisfies the definition of a <em>Gaussian white noise</em>. Then we can confidently approach its integral as a Wiener process (or Brownian motion process). We can also get this from <a href="https://en.wikipedia.org/wiki/Donsker%27s_theorem">Donsker's theorem</a> I think, though I'm not sure about the details. Letting <span  class="math">\(U_t = \int_0^t \xi_s ds\)</span>, we finally have the SDE for an Ornstein-Uhlenbeck process<sup class="footnote-ref" id="fnref:3"><a class="footnote" href="#fn:3">3</a></sup>:</p>
+
+<p><span  class="math">\[dv_t = -\frac{\gamma}{m} v_t dt + \frac{1}{m}dU_t\]</span></p>
+
+<p>which we can integrate by applying <a href="https://en.wikipedia.org/wiki/It%C3%B4%27s_lemma">Ito's formula</a> in the following way:</p>
+
+<p><span  class="math">\[
+\begin{aligned}
+de^{\gamma t/m}v_t &= \left(\frac{\gamma}{m}e^{\gamma t/m}v_t dt + e^{\gamma t/m}dv_t\right) \\
+&= \frac{1}{m}e^{\gamma t/m} dU_t \\
+\implies e^{\gamma t/m}v_t &= v_0 + \frac{1}{m}\int_0^t e^{\gamma s/m} dU_s \\
+v_t &= v_0e^{-\gamma t/m} + \frac{1}{m}\int_0^t e^{-\gamma (t - s)/m} dU_s \\
+\end{aligned}
+\]</span></p>
+
+<p>This is in some sense the 'solution' to the Langevin equation, but our goal is to rederive the results in the Langevin paper almost <em>de novo</em>. Clearly from this result the expectation is just <span  class="math">\(v_0e^{-\gamma t/m}\)</span> (which decays to 0), since <span  class="math">\(U_s\)</span> the Wiener process has mean 0. However, for the second moment (from which we can compute the variance) we need to apply <a href="https://en.wikipedia.org/wiki/It%C3%B4_isometry">Ito's isometry</a>:</p>
+
+<p><span  class="math">\[
+\begin{aligned}
+\mathbb{E}[v_t^2] &= e^{-\gamma 2t/m}v_0^2 + g\mathbb{E}\left[\left(\frac{1}{m}\int_0^t e^{-(t - s)\gamma/m} dU_s\right)^2\right] \\
+&= e^{-2\gamma t/m}v_0^2 + \frac{g}{m^2}\mathbb{E}\left[\int_0^t e^{-2(t - s)\gamma/m} ds\right] \\
+&= e^{-2\gamma t/m}v_0^2 + \frac{g}{2\gamma m}\left[e^{-2(t - s)\gamma/m}\right]_0^t \\ 
+&= e^{-2\gamma t/m}v_0^2 + \frac{g}{2\gamma m}\left(1 - e^{-2\gamma t/m}\right) \\ 
+\end{aligned}\]</span></p>
+
+<p>Now, as <span  class="math">\(t \to \infty\)</span>, we'd expect <span  class="math">\(\mathbb{E}[v_t^2] = k_BT/m\)</span> (from equipartition), and the limit of the above result is <span  class="math">\(g/2\gamma m\)</span>, so we can conclude that:</p>
+
+<p><span  class="math">\[g = 2\gamma k_B T\]</span></p>
+
+<p>Finally, we can use this to derive the dynamics of the particle itself (as a stochastic process, of course):</p>
+
+<p><span  class="math">\[
+\begin{aligned}
+x_t &= \int_0^t v_s ds \\
+&= \int_0^t \left(v_0e^{-\gamma s/m} + \frac{1}{m}\int_0^s e^{-\gamma (s - u)/m} dU_u\right) ds \\
+&= x_0 + \frac{\gamma}{m}v_0\left[1 - e^{-\gamma t/m}\right] + \frac{1}{m} \int_0^t \left(\int_u^t e^{-\gamma(s - u) / m} ds\right) dU_u \\
+&= x_0 + \frac{\gamma}{m}v_0\left[1 - e^{-\gamma t/m}\right] + \frac{1}{\gamma} \int_0^t \left[1 - e^{-\gamma(t - u)/m}\right] dU_u
+\end{aligned}
+\]</span></p>
+
+<p>and again apply Ito's isometry to get the second moment (here, I drop the leading terms which go to 0 as <span  class="math">\(t \to \infty\)</span>):</p>
+
+<p><span  class="math">\[
+\begin{aligned}
+\mathbb{E}[(x_t - x_0)^2] &= \left(\text{terms that go to 0} \ldots \right) + \frac{1}{\gamma^2}\mathbb{E}\left[\left(\int_0^t \left[1 - e^{-(t - u)\gamma/m}\right] dU_u\right)^2\right] \\
+&= \frac{g}{\gamma^2} \int_0^t\left[1 - e^{-\gamma(t - s)/m}\right]^2 ds \\
+&= \left(\text{terms that go to 0} \ldots \right) + \frac{g}{\gamma^2}\left[t - \frac{m}{\gamma}\left(1 - e^{-t\gamma/m}\right)\right] \\
+\end{aligned}
+\]</span></p>
+
+<p>So, in the long run, the variance grows as <span  class="math">\(\mathbb{E}[(x_t - x_0)^2] = \frac{2k_BT}{\gamma} t\)</span>. Comparing this to the diffusion equation which says that this should grow as <span  class="math">\(2Dt\)</span>, we get that</p>
+
+<p><span  class="math">\[D = \frac{k_BT}{\gamma}\]</span></p>
+
+<p>which is Einstein's result.</p>
+
+<p><strong>References</strong></p>
+
+<p>Le Gall, Jean-François. Brownian motion, martingales, and stochastic calculus. Vol. 274. Heidelberg: Springer, 2016.</p>
+
+<p>Sjögren, Lennart. Stochastic Processes lecture notes ch. 6: <em>Brownian Motion: Langevin Equation</em>. Retrieved from <a href="http://physics.gu.se/~frtbm/joomla/media/mydocs/LennartSjogren/kap6.pdf">here</a></p>
+
+<p>Next: The <a href="https://en.wikipedia.org/wiki/Feynman%E2%80%93Kac_formula">Feynman-Kac Formula</a> which definitely has applications in statistics.</p>
+
+<!-- Another attempt we can make is to note that we sort of know the distribution of particles that arrive to impart a momentum: a particle with velocity $$v$$ comes with probability $$\propto \exp(-mv^2/2k_BT)$$ (which is a Gaussian distribution in $$v$$). Since the total momentum divided by $$dt$$ is the force applied (and the momentum is a constant times $$v$$ because of reflection angles, etc.), the distribution of the force $$\xi(t)$$ is also Gaussian. -->
+<div class="footnotes">
+
+<hr>
+
+<ol>
+<li id="fn:1">This is pretty related to <em>stochastic gradient Langevin dynamics</em> (<a href="https://www.ics.uci.edu/~welling/publications/papers/stoclangevin_v6.pdf">see here</a>) I think. I don't think I know that paper well enough or the surrounding background in (Neal, 2010) to comment intelligently yet, but something I hope to get to soon. My understanding is that Langevin dynamics are essentially the above system, but with a driving force (maybe the gradient of the loss?).
+ <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
+<li id="fn:2">One attempt to justify that the distribution of <span  class="math">\(\xi(t)\)</span> at each time must be Gaussian is the following: we let <span  class="math">\(dt\)</span> be large enough that hundreds of collisions still happen. No matter the distribution that that comes from, since the variables are i.i.d. we can apply the regular central limit theorem (CLT) to show that the overall force converges in distribution to a Gaussian.
+ <a class="footnote-return" href="#fnref:2"><sup>[return]</sup></a></li>
+<li id="fn:3">Actually, Ornstein <a href="http://216.92.172.113/courses/phys39/simulations/Uhlenbeck%20Brownian%20Motion%20Phys%20Rev%201930.pdf">developed</a> these methods in order to formalize Langevin's arguments. I've linked a review paper from 1930, but the first version was published in 1917, I think.
+ <a class="footnote-return" href="#fnref:3"><sup>[return]</sup></a></li>
+</ol>
+</div>
+
+</div>
+
+
+<footer>
+
+	<p><small><em>Written April 22, 2018. </em>
+		 
+		Send feedback to <a  href="mailto:rachitsingh@college.harvard.edu">the author</a>.
+		
+	</small></p>
+
+	<p>
+	<a href="/persistence-length/">← Persistence Length</a>&nbsp;
+	
+	</p>
+
+
+</footer>
+
+
+
+
+<script>renderMathInElement(document.body);</script>
+</body>
+</html>
