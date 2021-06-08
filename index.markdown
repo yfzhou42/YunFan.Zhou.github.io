@@ -44,14 +44,6 @@ I am still involved with music and rehearse with
 [Gamelan Kusuma Laras](https://kusumalaras.org/) a classical Javanese ensemble 
 that performs the repetoire of the courts of Central Java.
 
-github: [marikgoldstein](https://github.com/marikgoldstein), 
-[CV](https://cs.nyu.edu/~mg3479/cv.pdf)
-
-goldstein [AT] nyu [DOT] edu  
-
-pronouns: he/him/his
-
-
 <!--
 <p>
 Mark Goldstein<br>
