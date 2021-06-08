@@ -10,13 +10,13 @@ advised by [Rajesh Ranganath](https://cims.nyu.edu/~rajeshr/) and
 
 
 ## News
-* Summer 2021: working with Apple's Health AI team this summer supervised by Andy Miller and team!
+* Summer 2021: working with Apple's Health AI team this summer supervised by [Andy Miller](https://andymiller.github.io/) and team!
 
-* Spring 2021: some work on training survival models with inverse probability of censoring weighted estimators submitted to NeurIPS 2021! Work by *myself*, *Xintian Han*, Aahlad M. Puli, Thomas Wies, Adler J. Perotte, and Rajesh Ranganath.
+* Spring 2021: some work on training survival models with inverse probability of censoring weighted estimators submitted to NeurIPS 2021! Work by **myself**, **Xintian Han**, Aahlad M. Puli, Thomas Wies, Adler J. Perotte, and Rajesh Ranganath.
 	
-* Spring 2021: [Understanding Failures in Out-of-Distribution Detection with Deep Generative Models](https://icml.cc/Conferences/2021/AcceptedPapersInitial)accepted to ICML 2021! Work by *Lily H. Zhang*, myself, and Rajesh Ranganath.
+* Spring 2021: [Understanding Failures in Out-of-Distribution Detection with Deep Generative Models](https://icml.cc/Conferences/2021/AcceptedPapersInitial) accepted to ICML 2021! Work by **Lily H. Zhang**, myself, and Rajesh Ranganath.
 
-* Spring 2021: [Understanding Out-of-Distribution Detection with Deep Generative Models](https://sites.google.com/connect.hku.hk/robustml-2021/accepted-papers/paper-045) accepted to RobustML workshop @ ICLR 2021! Work by *Lily H. Zhang*, myself, and Rajesh Ranganath.
+* Spring 2021: [Understanding Out-of-Distribution Detection with Deep Generative Models](https://sites.google.com/connect.hku.hk/robustml-2021/accepted-papers/paper-045) accepted to RobustML workshop @ ICLR 2021! Work by **Lily H. Zhang**, myself, and Rajesh Ranganath.
 
 * Fall 2020: I qualified! Upgrade from Student to Candidate. 
 
@@ -24,7 +24,7 @@ advised by [Rajesh Ranganath](https://cims.nyu.edu/~rajeshr/) and
 
 * Fall 2020: the deep learning course I TA'ed in spring 2020 for [Yann LeCun](http://yann.lecun.com/) and Alfredo Canziani is now up on [Alf's github page](https://atcold.github.io/pytorch-Deep-Learning/), check out all of Alf's wonderful teaching materials and thanks to students for your notetaking
 
-* Fall 2020: [X-CAL: Explicit Calibration for Survival Analysis](https://papers.nips.cc/paper/2020/hash/d4a93297083a23cc099f7bd6a8621131-Abstract.html?fbclid=IwAR0N1TGoxo2EOO9CukVt5baIgY0wW9Mell_GkgzKvzPBuSxahMTpc6GuNUI) accepted to NeurIPS 2020! Work by *myself*, *Xintian Han*, *Aahlad M. Puli*, Adler J. Perotte, and Rajesh Ranganath. [arxiv link](https://arxiv.org/pdf/2101.05346.pdf)
+* Fall 2020: [X-CAL: Explicit Calibration for Survival Analysis](https://papers.nips.cc/paper/2020/hash/d4a93297083a23cc099f7bd6a8621131-Abstract.html?fbclid=IwAR0N1TGoxo2EOO9CukVt5baIgY0wW9Mell_GkgzKvzPBuSxahMTpc6GuNUI) accepted to NeurIPS 2020! Work by **myself**, **Xintian Han**, **Aahlad M. Puli**, Adler J. Perotte, and Rajesh Ranganath. [arxiv link](https://arxiv.org/pdf/2101.05346.pdf)
 
 * Summer 2019: I'm working in [Emtiyaz Khan's](https://emtiyaz.github.io/) Approximate Bayesian Inference group at [RIKEN AIP](https://aip.riken.jp/) in Tokyo!
 
