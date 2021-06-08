@@ -9,7 +9,7 @@ show_downloads: false
 title: mark goldstein
 logo: /assets/img/tokyoplant.jpeg
 description: >- # this means to ignore newlines until "baseurl:"
-  todo description 
+    I am a lotus plant at ueno station
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 domain: marikgoldstein.github.io       
