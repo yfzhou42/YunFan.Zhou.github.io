@@ -4,43 +4,26 @@ title: About
 permalink: /about/
 ---
 
-<!--
-<p>
-Mark Goldstein<br>
-<a href="https://en.wikipedia.org/wiki/Courant_Institute_of_Mathematical_Sciences">Courant Institute of Mathematical Sciences</a><br>
-pronouns: he/him/his <br>
-</p>
--->
-
 I am a PhD candidate at NYU Courant Institute of Mathematical Sciences,
 advised by [Rajesh Ranganath](https://cims.nyu.edu/~rajeshr/) and 
 [Thomas Wies](https://cs.nyu.edu/wies/) and working on machine learning for health.
-  <!---
-    I'm curious about how we can understand phenomena in and around us
-    (e.g. in healthcare, environment, art)
-    with a mix of mechanistic and probabilistic explanations.
-    For this reason I work on methodology in inference.
-    If we then use such models to make decisions, we should explore
-    what it means to do so safely.
-    <br> 
--->
 News:
     - Summer 2021: working with Apple's Health AI team this summer 
 			supervised by Andy Miller and team!
     - Spring 2021: some work on training survival models with inverse probability 
 			of censoring weighted estimators
-    		submitted to NeurIPS 2021! Work by <b>myself</b>, <b>Xintian Han</b>, 
+    		submitted to NeurIPS 2021! Work by *myself*, *Xintian Han*, 
 			Aahlad M. Puli, Thomas Wies, Adler J. Perotte, and Rajesh Ranganath.
 	- Spring 2021: 
         	[Understanding Failures in Out-of-Distribution 
 			Detection with Deep Generative 
 			Models](https://icml.cc/Conferences/2021/AcceptedPapersInitial)accepted to ICML 2021!
-   			Work by <b>Lily H. Zhang</b>, myself, and Rajesh Ranganath.
+   			Work by *Lily H. Zhang*, myself, and Rajesh Ranganath.
     - Spring 2021: 
         	[Understanding Out-of-Distribution Detection with Deep Generative 
 			Models](https://sites.google.com/connect.hku.hk/robustml-2021/accepted-papers/paper-045) 
 			accepted to RobustML workshop @ ICLR 2021!
-    		Work by <b>Lily H. Zhang</b>, myself, and Rajesh Ranganath.
+    		Work by *Lily H. Zhang*, myself, and Rajesh Ranganath.
 	- Fall 2020: 
 			I qualified! Upgrade from Student to Candidate. 
     - Fall 2020: 
@@ -55,7 +38,7 @@ News:
     - Fall 2020: 
 			[X-CAL: Explicit Calibration for Survival Analysis](https://papers.nips.cc/paper/2020/hash/d4a93297083a23cc099f7bd6a8621131-Abstract.html?fbclid=IwAR0N1TGoxo2EOO9CukVt5baIgY0wW9Mell_GkgzKvzPBuSxahMTpc6GuNUI) 
 			accepted to NeurIPS 2020!
-          	Work by <b>myself</b>, <b>Xintian Han</b>, <b>Aahlad M. Puli</b>, 
+          	Work by *myself*, *Xintian Han*, *Aahlad M. Puli*, 
 			Adler J. Perotte, and Rajesh Ranganath. [arxiv link](https://arxiv.org/pdf/2101.05346.pdf)
 	- Summer 2019: 
 				I'm working in [Emtiyaz Khan's](https://emtiyaz.github.io/) 
@@ -67,7 +50,7 @@ at [Harvard SEAS](https://www.seas.harvard.edu/).
 Between Harvard and NYU, I worked with the 
 [CoCoSci](http://cocosci.mit.edu/) group at 
 [MIT BCS](https://bcs.mit.edu/)
-Previous to <i>that</i>, I studied music composition, improvisation, and theory 
+Previous to that, I studied music composition, improvisation, and theory 
 at New England Conservatory with 
 [Anthony Coleman](https://en.wikipedia.org/wiki/Anthony_Coleman),
 [Stratis Minakakis](https://www.stratisminakakis.info) 
@@ -85,6 +68,24 @@ goldstein [AT] nyu [DOT] edu
 pronouns: he/him/his
 
 
+<!--
+<p>
+Mark Goldstein<br>
+<a href="https://en.wikipedia.org/wiki/Courant_Institute_of_Mathematical_Sciences">Courant Institute of Mathematical Sciences</a><br>
+pronouns: he/him/his <br>
+</p>
+-->
+
+  <!---
+    I'm curious about how we can understand phenomena in and around us
+    (e.g. in healthcare, environment, art)
+    with a mix of mechanistic and probabilistic explanations.
+    For this reason I work on methodology in inference.
+    If we then use such models to make decisions, we should explore
+    what it means to do so safely.
+    <br> 
+-->
+
 
 <!-- this cool <a href="https://pl-ai-seminar.seas.harvard.edu/">seminar on the intersection of AI and PL research</a> -->
 
@@ -95,12 +96,4 @@ where I worked primarily with <a href="https://www.seltzer.com/margo/">Margo Sel
 with the <a href="http://cocosci.mit.edu/">CoCoSci</a> group at <a href="https://bcs.mit.edu/">MIT BCS</a> on model-based RL under
 <a href="https://cbmm.mit.edu/about/people/tsividis">Pedro Tsividis</a> and <a href="http://cocosci.mit.edu/josh">Josh Tenenbaum</a>.
 -->
-
-
-
-
-
-
-
-
 
