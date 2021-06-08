@@ -64,8 +64,7 @@ I am still involved with music and rehearse with
 that performs the repetoire of the courts of Central Java.
 
 github: [marikgoldstein](https://github.com/marikgoldstein), 
-[CV](https://cs.nyu.edu/~mg3479/cv.pdf),
-[google scholar](https://scholar.google.fr/citations?hl=en&user=-oKlMZUAAAAJ&view_op=list_works&sortby=pubdate)
+[CV](https://cs.nyu.edu/~mg3479/cv.pdf)
 
 goldstein [AT] nyu [DOT] edu  
 
