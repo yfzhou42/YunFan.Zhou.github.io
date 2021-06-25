@@ -6,7 +6,8 @@ layout: default
 
 I am a PhD candidate at NYU Courant Institute of Mathematical Sciences,
 advised by [Rajesh Ranganath](https://cims.nyu.edu/~rajeshr/) and 
-[Thomas Wies](https://cs.nyu.edu/wies/) and working on machine learning for health.
+[Thomas Wies](https://cs.nyu.edu/wies/). I work on survival analysis, 
+causal inference, and representation learning problems with a focus on machine learning for health.
 
 
 ## News
