@@ -13,7 +13,7 @@ causal inference, and representation learning problems with a focus on machine l
 ## News
 * Summer 2021: working with Apple's Health AI team this summer supervised by [Andy Miller](https://andymiller.github.io/) and team!
 
-* Spring 2021: some work on training survival models with inverse probability of censoring weighted estimators submitted to NeurIPS 2021! Work by **myself**, **Xintian Han**, Aahlad M. Puli, Thomas Wies, Adler J. Perotte, and Rajesh Ranganath.
+* Spring 2021: some work on games for training survival models in submission! Work by **myself**, **Xintian Han**, Aahlad M. Puli, Thomas Wies, Adler J. Perotte, and Rajesh Ranganath.
 	
 * Spring 2021: [Understanding Failures in Out-of-Distribution Detection with Deep Generative Models](https://icml.cc/Conferences/2021/AcceptedPapersInitial) accepted to ICML 2021! Work by **Lily H. Zhang**, myself, and Rajesh Ranganath.
 
