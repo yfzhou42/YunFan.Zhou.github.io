@@ -33,6 +33,8 @@ causal inference, and representation learning problems with a focus on machine l
 
 I was a research assistant and teaching fellow in the computer science department 
 at [Harvard SEAS](https://www.seas.harvard.edu/).
+I am still an on/off TF for the 
+[harvard undergrad ML course](https://harvard-ml-courses.github.io/cs181-web/).
 Between Harvard and NYU, I worked with the 
 [CoCoSci](http://cocosci.mit.edu/) group at 
 [MIT BCS](https://bcs.mit.edu/).
