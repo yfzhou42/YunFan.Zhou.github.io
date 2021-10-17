@@ -14,8 +14,9 @@ causal inference, and representation learning problems with a focus on machine l
 
 * Fall 2021: selected as a recipient of the NeurIPS 2021 Outstanding Reviewer Award: *given to the top 8% of reviewers who were judged to be instrumental to the review process based on Area Chair and author feedback*. Meaningful to me since it was my first time reviewing. Glad to be a part of it!
 
-* Fall 2021: Inverse-Weighted Survival Games accepted to NeurIPS 2021! We train failure and censoring models jointly to 
-optimize survival objectives that require re-weighting.
+* Fall 2021: Inverse-Weighted Survival Games accepted to NeurIPS 2021! 
+A new way to estimate survival models 
+by playing games involving both the failure and censoring distribution!
 Work by **myself**, **Xintian Han**, Aahlad M. Puli, Thomas Wies, Adler J. Perotte, and Rajesh Ranganath. (link coming soon)
 
 * Summer 2021: working with Apple's Health AI team this summer supervised by [Andy Miller](https://andymiller.github.io/) and team!
