@@ -21,12 +21,12 @@ part of my internship at Apple Health AI.
 * Fall 2021: *Inverse-Weighted Survival Games* accepted to NeurIPS 2021! 
 A new way to estimate survival models 
 by playing games involving both the failure and censoring distribution!
-Work by **myself**, **Xintian Han**, Aahlad M. Puli, Thomas Wies, Adler J. Perotte, and Rajesh Ranganath. (link coming soon)
+Work by **myself**, **Xintian Han**, Aahlad Puli, Thomas Wies, Adler J. Perotte, and Rajesh Ranganath. (link coming soon)
 
 * Summer 2021: working with Apple's Health AI team this summer supervised by [Andy Miller](https://andymiller.github.io/) and team!
 
 <!--
-* Spring 2021: some work on games for training survival models in submission! Work by **myself**, **Xintian Han**, Aahlad M. Puli, Thomas Wies, Adler J. Perotte, and Rajesh Ranganath.
+* Spring 2021: some work on games for training survival models in submission! Work by **myself**, **Xintian Han**, Aahlad Puli, Thomas Wies, Adler J. Perotte, and Rajesh Ranganath.
 -->
 	
 * Spring 2021: [Understanding Failures in Out-of-Distribution Detection with Deep Generative Models](https://icml.cc/Conferences/2021/AcceptedPapersInitial) accepted to ICML 2021! Work by **Lily H. Zhang**, myself, and Rajesh Ranganath.
@@ -39,7 +39,7 @@ Work by **myself**, **Xintian Han**, Aahlad M. Puli, Thomas Wies, Adler J. Perot
 
 * Fall 2020: the deep learning course I TA'ed in spring 2020 for [Yann LeCun](http://yann.lecun.com/) and Alfredo Canziani is now up on [Alf's github page](https://atcold.github.io/pytorch-Deep-Learning/), check out all of Alf's wonderful teaching materials and thanks to students for your notetaking
 
-* Fall 2020: [X-CAL: Explicit Calibration for Survival Analysis](https://papers.nips.cc/paper/2020/hash/d4a93297083a23cc099f7bd6a8621131-Abstract.html?fbclid=IwAR0N1TGoxo2EOO9CukVt5baIgY0wW9Mell_GkgzKvzPBuSxahMTpc6GuNUI) accepted to NeurIPS 2020! Work by **myself**, **Xintian Han**, **Aahlad M. Puli**, Adler J. Perotte, and Rajesh Ranganath. [arxiv link](https://arxiv.org/pdf/2101.05346.pdf)
+* Fall 2020: [X-CAL: Explicit Calibration for Survival Analysis](https://papers.nips.cc/paper/2020/hash/d4a93297083a23cc099f7bd6a8621131-Abstract.html?fbclid=IwAR0N1TGoxo2EOO9CukVt5baIgY0wW9Mell_GkgzKvzPBuSxahMTpc6GuNUI) accepted to NeurIPS 2020! Work by **myself**, **Xintian Han**, **Aahlad Puli**, Adler J. Perotte, and Rajesh Ranganath. [arxiv link](https://arxiv.org/pdf/2101.05346.pdf)
 
 * Summer 2019: I'm working in [Emtiyaz Khan's](https://emtiyaz.github.io/) Approximate Bayesian Inference group at [RIKEN AIP](https://aip.riken.jp/) in Tokyo!
 
