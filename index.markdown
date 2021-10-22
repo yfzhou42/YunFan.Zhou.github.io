@@ -14,7 +14,7 @@ causal inference, and representation learning problems with a focus on machine l
 
 * Fall 2021: *Learning Invariant Representations with Missing Data* accepted to NeurIPS 2021 DistShift Workshop (on distribution shifts)!
 Work by **myself**, Jörn-Henrik Jacobsen, Olina Chau, Adriel Saporta, Aahlad Puli, Rajesh Ranganath, and Andrew C. Miller. Work done as
-part of my internship at Apple Health AI
+part of my internship at Apple Health AI.
 
 * Fall 2021: selected as a recipient of the NeurIPS 2021 Outstanding Reviewer Award: *given to the top 8% of reviewers who were judged to be instrumental to the review process based on Area Chair and author feedback*. Meaningful to me since it was my first time reviewing. Glad to be a part of it!
 
