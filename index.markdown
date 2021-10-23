@@ -29,9 +29,9 @@ Work by myself\*, Xintian Han\*, Aahlad Puli, Thomas Wies, Adler J. Perotte, and
 * Spring 2021: some work on games for training survival models in submission! Work by myself\*, Xintian Han\*, Aahlad Puli, Thomas Wies, Adler J. Perotte, and Rajesh Ranganath.
 -->
 	
-* Spring 2021: [Understanding Failures in Out-of-Distribution Detection with Deep Generative Models](https://icml.cc/Conferences/2021/AcceptedPapersInitial) accepted to ICML 2021! Work by **Lily H. Zhang**, myself, and Rajesh Ranganath.
+* Spring 2021: [Understanding Failures in Out-of-Distribution Detection with Deep Generative Models](https://icml.cc/Conferences/2021/AcceptedPapersInitial) accepted to ICML 2021! Work by Lily H. Zhang\*, myself, and Rajesh Ranganath.
 
-* Spring 2021: [Understanding Out-of-Distribution Detection with Deep Generative Models](https://sites.google.com/connect.hku.hk/robustml-2021/accepted-papers/paper-045) accepted to RobustML workshop @ ICLR 2021! Work by **Lily H. Zhang**, myself, and Rajesh Ranganath.
+* Spring 2021: [Understanding Out-of-Distribution Detection with Deep Generative Models](https://sites.google.com/connect.hku.hk/robustml-2021/accepted-papers/paper-045) accepted to RobustML workshop @ ICLR 2021! Work by Lily H. Zhang\*, myself, and Rajesh Ranganath.
 
 * Fall 2020: I qualified! Upgrade from Student to Candidate. 
 
