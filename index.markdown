@@ -21,7 +21,7 @@ part of my internship at Apple Health AI.
 * Fall 2021: *Inverse-Weighted Survival Games* accepted to NeurIPS 2021! 
 A new way to estimate survival models 
 by playing games involving both the failure and censoring distribution!
-Work by myself\*, Xintian Han\*, Aahlad Puli, Thomas Wies, Adler J. Perotte, and Rajesh Ranganath. (link coming soon)
+Work by myself\*, Xintian Han\*, Aahlad Puli, Thomas Wies, Adler J. Perotte, and Rajesh Ranganath. [public openreview link](https://openreview.net/pdf?id=j4oYd8SGop)
 
 * Summer 2021: working with Apple's Health AI team this summer supervised by [Andy Miller](https://andymiller.github.io/) and team!
 
