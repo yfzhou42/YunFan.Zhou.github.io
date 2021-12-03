@@ -12,16 +12,12 @@ causal inference, and representation learning problems with a focus on machine l
 
 ## News
 
-* Fall 2021: *Learning Invariant Representations with Missing Data* accepted to NeurIPS 2021 DistShift Workshop (on distribution shifts)!
-Work by myself\*, Jörn-Henrik Jacobsen, Olina Chau, Adriel Saporta, Aahlad Puli, Rajesh Ranganath, and Andrew C. Miller. Work done as
-part of my internship at Apple Health AI.
+* Fall 2021: [Learning Invariant Representations with Missing Data](https://arxiv.org/pdf/2112.00881.pdf) accepted to NeurIPS 2021 DistShift Workshop (on distribution shifts)!
+Work done as part of my internship at Apple Health AI.
 
 * Fall 2021: selected as a recipient of the NeurIPS 2021 Outstanding Reviewer Award: *given to the top 8% of reviewers who were judged to be instrumental to the review process based on Area Chair and author feedback*. Meaningful to me since it was my first time reviewing. Glad to be a part of it!
 
-* Fall 2021: *Inverse-Weighted Survival Games* accepted to NeurIPS 2021! 
-A new way to estimate survival models 
-by playing games involving both the failure and censoring distribution!
-Work by myself\*, Xintian Han\*, Aahlad Puli, Thomas Wies, Adler J. Perotte, and Rajesh Ranganath. [public openreview link](https://openreview.net/pdf?id=j4oYd8SGop)
+* Fall 2021: [Inverse-Weighted Survival Games](https://arxiv.org/pdf/2111.08175.pdf) accepted to NeurIPS 2021! 
 
 * Summer 2021: working with Apple's Health AI team this summer supervised by [Andy Miller](https://andymiller.github.io/) and team!
 
@@ -29,7 +25,7 @@ Work by myself\*, Xintian Han\*, Aahlad Puli, Thomas Wies, Adler J. Perotte, and
 * Spring 2021: some work on games for training survival models in submission! Work by myself\*, Xintian Han\*, Aahlad Puli, Thomas Wies, Adler J. Perotte, and Rajesh Ranganath.
 -->
 	
-* Spring 2021: [Understanding Failures in Out-of-Distribution Detection with Deep Generative Models](https://icml.cc/Conferences/2021/AcceptedPapersInitial) accepted to ICML 2021! Work by Lily H. Zhang\*, myself, and Rajesh Ranganath.
+* Spring 2021: [Understanding Failures in Out-of-Distribution Detection with Deep Generative Models](https://arxiv.org/pdf/2107.06908.pdf) accepted to ICML 2021! Work by Lily H. Zhang\*, myself, and Rajesh Ranganath.
 
 * Spring 2021: [Understanding Out-of-Distribution Detection with Deep Generative Models](https://sites.google.com/connect.hku.hk/robustml-2021/accepted-papers/paper-045) accepted to RobustML workshop @ ICLR 2021! Work by Lily H. Zhang\*, myself, and Rajesh Ranganath.
 
@@ -39,7 +35,7 @@ Work by myself\*, Xintian Han\*, Aahlad Puli, Thomas Wies, Adler J. Perotte, and
 
 * Fall 2020: the deep learning course I TA'ed in spring 2020 for [Yann LeCun](http://yann.lecun.com/) and Alfredo Canziani is now up on [Alf's github page](https://atcold.github.io/pytorch-Deep-Learning/), check out all of Alf's wonderful teaching materials and thanks to students for your notetaking
 
-* Fall 2020: [X-CAL: Explicit Calibration for Survival Analysis](https://papers.nips.cc/paper/2020/hash/d4a93297083a23cc099f7bd6a8621131-Abstract.html?fbclid=IwAR0N1TGoxo2EOO9CukVt5baIgY0wW9Mell_GkgzKvzPBuSxahMTpc6GuNUI) accepted to NeurIPS 2020! Work by myself\*, Xintian Han\*, Aahlad Puli\*, Adler J. Perotte, and Rajesh Ranganath. [arxiv link](https://arxiv.org/pdf/2101.05346.pdf)
+* Fall 2020: [X-CAL: Explicit Calibration for Survival Analysis](https://arxiv.org/pdf/2101.05346.pdf) accepted to NeurIPS 2020! 
 
 * Summer 2019: I'm working in [Emtiyaz Khan's](https://emtiyaz.github.io/) Approximate Bayesian Inference group at [RIKEN AIP](https://aip.riken.jp/) in Tokyo!
 
