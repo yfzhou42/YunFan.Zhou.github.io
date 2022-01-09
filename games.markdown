@@ -180,6 +180,9 @@ BS(t;\theta) &=  \mathbb{E} \Big[
 \end{align*}
 $$
 
+**The main and straightforward insight we observe is** that the models should not be optimized with respect to their role as inverse-weights,
+since the $$F_\theta$$ BS does *not* provide a proper objective for $$G_\theta$$ and vice-versa.
+
 
 ## Experiments
 
