@@ -180,6 +180,7 @@ To keep things simple let us stick with the 2-timestep setting where each model
 only has one parameter. 
 
 Let's look again at the BS for $$F_\theta$$ and $$G_\theta$$, and replace the weights with models
+
 $$\begin{align*}
 BS_{G_\theta}(t;F_\theta) &=  \mathbb{E} \Big[ 
 									\frac{\overline{F_\theta}(t|X)^2 \Delta 1[U \leq t]}{\overline{G}_\theta(U^{-}|X)}								
@@ -196,6 +197,14 @@ $$
 
 **The main and straightforward insight we observe is** that the models should not be optimized with respect to their role as inverse-weights,
 since the $$F_\theta$$ BS does *not* provide a proper objective for $$G_\theta$$ and vice-versa.
+
+To define the games in this example with BS, we define 
+
+$$\begin{align*}
+	\ell_F(F_\theta;G_\theta) &= BS_{G_\theta}(t;F_\theta) \quad \text{loss for F model}\\
+	\ell_G(G_\theta;F_\theta) &= BS_{F_\theta}(t;G_\theta) \quad \text{loss for G model}
+\end{align*}
+$$
 
 
 ## Experiments
