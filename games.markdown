@@ -79,35 +79,39 @@ Concordance measures the fraction of datapoints whose modeled risks are ordered 
 Brier Score picks a particular time $$t$$ and considers the classification problem of whether or not a datapoint fails by $$t$$. It does so
 by measuring the average squared error between the event status and modeled probability:
 
-$$BS(t;\theta) = \mathbb{E} \Big[ \Big( F_{\theta}(t|X) - 1[T \leq t] \Big) ^2 \Big]$$ 
+$$BS(t;F_\theta) = \mathbb{E} \Big[ \Big( F_{\theta}(t|X) - 1[T \leq t] \Big) ^2 \Big]$$ 
 
 where $$F_{\theta}$$ is a model for the failure CDF $$F$$. We focus on BS and discuss why we do not focus on concordance at the end of this post.
 BS is usually motivated by the fact that it measures both discrimination (prediction) and calibration (that model probabilities match with empirical frequencies).
 
-Censoring makes it challenging to compute $$BS(t;\theta)$$.
+Censoring makes it challenging to compute $$BS(t;F_\theta)$$.
 For patients censored before time t, we do not observe $$1[T \leq t]$$. However, if the true censoring distribution were to be known,
 we could use re-weighting (see section TODO in the paper) to estimate the BS consistently:
 
 $$\begin{align*}
-BS(t;\theta) &=  \mathbb{E} \Big[ 
+BS_G(t;F_\theta) &=  \mathbb{E} \Big[ 
 									\frac{\overline{F_\theta}(t|X)^2 \Delta 1[U \leq t]}{\overline{G}(U^{-}|X)}								
 							+
 									\frac{F_\theta(t|X)^2 1[U > t]}{\overline{G}(t|X)}
 							\Big] 
 \end{align*}
 $$
- 
-Crucially, while this expectation equals the previous definition of $$BS(t;\theta)$$, Monte-Carlo estimates of it only require samples from the *observed data* $$X,U,\Delta$$.
 
-## So can we optimize the inverse-weighted BS? 
+We have used subscript $$G$$ to make clear the presence of the second distribution in the objective.
+Crucially, while this expectation equals the previous definition of $$BS(t;F_\theta)$$, Monte-Carlo estimates of it only require samples from the *observed data* $$X,U,\Delta$$.
+
+## Why can't we just optimize the inverse-weighted BS? 
 * * *
 
 What stops us from using the re-weighted BS as an objective for our $$F_\theta$$ model? Unfortunately the censoring distribution $$G$$ required in the estimates
-is the *true censoring distribution* rather than a model. But in practice, we do not know this distribution ahead of time. How can we get it? 
+is the *true censoring distribution* rather than a model. But in practice, we do not know this distribution ahead of time and most
+use a model $$G_\theta$$. Where does this model come from?
+
+## Where does the censoring distribution model come from?
+* * *
 
 Modeling the censoring distribution is itself a *censored survival task*: observed failures censor the censoring times!  Moreover,
 because $$G$$ shows up by computing probabilities, we care the the estimated model $$G_\theta$$ be calibrated.
-
 
 **Quick recap**: we want to estimate $$F_\theta$$ with BS. The BS needs $$G$$ under censoring. We do not have $$G$$. So we can model
 it with $$G_\theta$$ and then plug it into $$F_\theta$$'s objective. Which objective do we use for $$G_\theta$$?
@@ -115,9 +119,8 @@ it with $$G_\theta$$ and then plug it into $$F_\theta$$'s objective. Which objec
 Well, since we already know that BS optimizes calibration, can we get our $$G_\theta$$ estimate using BS as an objective? To do this we would need to use the re-weighted BS for $$G_\theta$$. This is like the above re-weighted BS
 but with the roles of $$F$$ and $$G$$ swapped (and $$\Delta$$ flipped):
 
-
 $$\begin{align*}
-BS(t;\theta) &=  \mathbb{E} \Big[ 
+BS_F(t;G_\theta) &=  \mathbb{E} \Big[ 
 									\frac{\overline{G_\theta}(t|X)^2 \overline{\Delta} 1[U \leq t]}{\overline{F}(U^{-}|X)}								
 							+
 									\frac{G_\theta(t|X)^2 1[U > t]}{\overline{F}(t|X)}
@@ -125,26 +128,38 @@ BS(t;\theta) &=  \mathbb{E} \Big[
 \end{align*}
 $$
  
-Since we again do not know the true $$F$$, we replace it with $$F_\theta$$.
+Since we again do not know the true $$F$$, we replace it with $$F_\theta$$ and compute $$BS_{F_\theta}(t;G_\theta)$$.
 
 This leads to what we call the **inverse-weighting dilemma**: 
 - $$F_\theta$$'s objective needs a $$G_\theta$$ model
 - if the $$G_\theta$$ estimate is bad, the objective does not equal the BS
-- to get a good $$G_\theta$$ we need to optimize $$G$$'s BS
-- $$G$$'s BS needs $$F$$, but we only have an $$F_\theta$$ model of questionable quality
+- to get a good $$G_\theta$$ we need to optimize $$G_\theta$$'s BS
+- $$G_\theta$$'s BS needs $$F$$, but we only have an $$F_\theta$$ model of questionable quality
 
+So each model's objective needs the other distribution.
 Is there anything we can do to ensure that the optimization leads to a good $$G_\theta$$, which in turn defines the BS for $$F_\theta$$,
 which in turn we optimize to get a good estimate of $$F_\theta$$ that performs well under BS evaluation at test time?
 
-## First try to optimizing inverse-weighted BS
+## First Attempt: optimize sum of both BS's
 * * *
 
-
 A first try could be this: why not optimize the sum of $$F_\theta$$ and $$G_\theta$$'s Brier Scores, with respect to both models, where all inverse-weights
-are replaced by models. That is, $$G_\theta$$ shows up in $$F_\theta$$'s BS and vice-versa. This is what we consider to be the "basic machine learning solution"
+are replaced by models. That is, $$G_\theta$$ shows up in $$F_\theta$$'s BS and vice-versa. Let's use $$BS_{G_\theta}(t;F_\theta)$$ to denote
+$$F_\theta$$'s BS where the weights come from model $$G_\theta$$ instead of true censoring distribution $$G$$.
+
+
+$$loss(t;F_\theta,G_\theta) = BS_{G_\theta}(t;F_\theta) + BS_{F_\theta}(t;G_\theta) $$
+
+
+This is what we consider to be the "basic machine learning solution"
 to this problem. Does it work?
 
-We show the loss contours of this optimization for BS(t=1) for a problem over two timesteps (where the failure and censoring model each only have one parameter):
+
+For the remainder of the post, let us consider a two-timestep problem where $$T$$ and $$C$$ both only take values in $$\{1,2\}$$. In such discrete settings,
+the $$BS$$ at the last time step is equal to $$0$$ for any model so the only thing to optimize is $$BS(t=1)$$. This corresponds to the fact
+that there is only one parameter in each model.
+
+We show the loss contours of this optimization for $$loss(t=1;F_\theta,G_\theta)$$ with respect toe each model's single parameter $$P_\theta(T=1)$$ and $$P_\theta(C=1)$$:
 
 ![min plot](assets/img/min_plot.png)
 ![legend](assets/img/key.png)
@@ -164,18 +179,17 @@ which looks like this:
 To keep things simple let us stick with the 2-timestep setting where each model
 only has one parameter. 
 
-Let's look again at the BS for $$F_\theta$$ and $$G_\theta$$:
-
+Let's look again at the BS for $$F_\theta$$ and $$G_\theta$$, and replace the weights with models
 $$\begin{align*}
-BS(t;\theta) &=  \mathbb{E} \Big[ 
-									\frac{\overline{F_\theta}(t|X)^2 \Delta 1[U \leq t]}{\overline{G}(U^{-}|X)}								
+BS_{G_\theta}(t;F_\theta) &=  \mathbb{E} \Big[ 
+									\frac{\overline{F_\theta}(t|X)^2 \Delta 1[U \leq t]}{\overline{G}_\theta(U^{-}|X)}								
 							+
-									\frac{F_\theta(t|X)^2 1[U > t]}{\overline{G}(t|X)}
+									\frac{F_\theta(t|X)^2 1[U > t]}{\overline{G}_\theta(t|X)}
 							\Big] \\
-BS(t;\theta) &=  \mathbb{E} \Big[ 
-									\frac{\overline{G_\theta}(t|X)^2 \overline{\Delta} 1[U \leq t]}{\overline{F}(U^{-}|X)}								
+BS_{F_\theta}(t;G_\theta) &=  \mathbb{E} \Big[ 
+									\frac{\overline{G_\theta}(t|X)^2 \overline{\Delta} 1[U \leq t]}{\overline{F}_\theta(U^{-}|X)}								
 							+
-									\frac{G_\theta(t|X)^2 1[U > t]}{\overline{F}(t|X)}
+									\frac{G_\theta(t|X)^2 1[U > t]}{\overline{F}_\theta(t|X)}
 							\Big] 
 \end{align*}
 $$
