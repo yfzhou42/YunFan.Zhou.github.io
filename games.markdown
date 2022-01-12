@@ -8,14 +8,20 @@ permalink: games.html
 * * * 
 
 This post is about Survival Analysis (the modeling of time-to-event distributions), 
-and about our recent NeurIPS 2021 work [Inverse-Weighted Survival Games](https://arxiv.org/abs/2111.08175).
+and about our recent NeurIPS 2021 work [Inverse-Weighted Survival Games](https://arxiv.org/abs/2111.08175)
+with equal contribution from <a href="https://scholar.google.com/citations?user=WJnM24AAAAAJ&hl=en">Xintian Han</a> and 
+<a href="https://marikgoldstein.github.io/">myself</a>.
 
-![games](assets/img/games.png)
+$$\begin{align*}
+	\texttt{failure player}: &\min_{F_{\theta}} \ell_F(F_\theta;G_\theta)\\
+	\texttt{censor player}:	 &\min_{G_{\theta}} \ell_G(G_\theta;F_\theta)
+\end{align*}
+$$
 
 (*For those not familiar with survival modeling, you will be in just a few moments by reading my* 
 <a href="./survival.html">Survival Analysis Intro</a>!)
 
-The work presents a new method, *IPCW Games*, for estimating survival
+The work presents a new method, *IPCW (Inverse Probability of Censoring Weighted) Games*, for estimating survival
 distributions, motivated by the following points:
 
 - Survival models are evaluated on criteria like 
@@ -28,7 +34,7 @@ Brier Score (BS), Bernoulli Log Likelihood (BLL), and Calibration
 
 
 The approach we present, unlike the usual MLE, makes use of a censoring model
-(the distribution that causes missingness of times-to-event, see <a href="./survival.html">survival intro</a>)
+(the distribution that causes missingness of times-to-event and is usually not modeled, see <a href="./survival.html">survival intro</a>)
 and plays a *game* between a *failure model player* and *censoring model player*.
 
 
@@ -119,6 +125,7 @@ This leads to what we call the **inverse-weighting dilemma**:
 - if the $$G_\theta$$ estimate is bad, the objective does not equal the BS
 - to get a good $$G_\theta$$ we need to optimize $$G_\theta$$'s BS
 - $$G_\theta$$'s BS needs $$F$$, but we only have an $$F_\theta$$ model of questionable quality
+- with access only to these models, what can we say about optimizing $$F_\theta$$'s BS?
 
 ## Resolving the Dilemma: First Attempt
 * * *
@@ -137,15 +144,20 @@ that there is only one parameter in each model.
 
 We show the loss contours of this optimization for $$loss(t=1;F_\theta,G_\theta)$$ with respect to each model's single parameter $$P_\theta(T=1)$$ and $$P_\theta(C=1)$$:
 
-![min plot](assets/img/min_plot.png)
-![legend](assets/img/key.png)
+
+
+<img src="assets/img/min_plot.png" alt="min plot" width="300"/>
+
+<img src="assets/img/key.png" alt="plot legend" width="300"/>
+
 
 Unfortunately, the solution to this optimization is not at the true failure and censoring distribution. 
 
 **In the rest of this post**, we present our solution to this problem, Inverse-Weighted Survival Games, which define an optimization that follows gradients to the right solution,
 which looks like this:
 
-![grad plot](assets/img/grad_plot.png)
+<img src="assets/img/grad_plot.png" alt="grad plot" width="300"/>
+
 
 
 ## Inverse-Weighted Survival Games
@@ -173,13 +185,41 @@ $$
 **The main and straightforward insight we observe is** that the models should not be optimized with respect to their role as inverse-weights,
 since the $$F_\theta$$ BS does *not* provide a proper objective for $$G_\theta$$ and vice-versa.
 
-To define the games in this example with BS, we define 
+To define the games in this example with BS, we define losses for each of the models
 
 $$\begin{align*}
-	\ell_F(F_\theta;G_\theta) &= BS_{G_\theta}(t;F_\theta) \quad \text{loss for F model}\\
-	\ell_G(G_\theta;F_\theta) &= BS_{F_\theta}(t;G_\theta) \quad \text{loss for G model}
+	\ell_F(t;F_\theta;G_\theta) &= BS_{G_\theta}(t;F_\theta) \quad \text{loss for F model}\\
+	\ell_G(t;G_\theta;F_\theta) &= BS_{F_\theta}(t;G_\theta) \quad \text{loss for G model}
 \end{align*}
 $$
+
+The game is followed by having each model optimize only its loss:
+
+$$\begin{align*}
+	\texttt{failure player}: &\min_{F_{\theta}} \ell_F(t;F_\theta;G_\theta)\\
+	\texttt{censor player}:	 &\min_{G_{\theta}} \ell_G(t;G_\theta;F_\theta)
+\end{align*}
+$$
+
+For problems with more than two timesteps, one can define e.g.
+
+$$\begin{align*}
+	\ell_F(F_\theta;G_\theta) &= \sum_t BS_{G_\theta}(t;F_\theta) \quad \text{loss for F model}\\
+	\ell_G(G_\theta;F_\theta) &= \sum_t BS_{F_\theta}(t;G_\theta) \quad \text{loss for G model}
+\end{align*}
+$$
+
+**More generally** these games can be constructed using two ingredients:  
+- proper scoring rules: losses like Brier Score and Bernoulli Log Likelihood that have the true distribution as a minimizer
+			when an expectation is taken over the data distribution  
+- re-weighted estimators of these losses that allow computation under censoring
+
+Importantly, to implement the games appropriately, the models must be treated as constants when they are used
+for re-weighing in the other model's loss. For example, the summed BS game can be implemented just like the 
+first-try summed objective just by ensuring loss denominators are constant in the gradient computation.
+
+## Theoretical Results
+* * * 
 
 
 ## Experiments
