@@ -35,3 +35,31 @@ the censored datapoints can lead to biased estimates of the time-to-event distri
 and then used to derive objectives/loss functions/estimation methods that accounts for censoring appropriately. Luckily, as discussed below, this is not so
 difficult to do in many standard cases.
 
+# Likelihood Objective
+* * *
+
+For each patient $$X$$,
+we are interesting in modeling the time-to-event (called the *failure time*) $$T|X$$ with CDF $$F$$.
+There is also a censoring time $$C|X$$ with CDF $$G$$ for each patient.
+Under right-censoring, we only observe $$X, U=\min(T,C)$$ and $$\Delta=1[T \leq C]$$ instead of $$T,C$$.
+We assume i.i.d. data and random censoring $$T \perp C | X$$. Finally, let $$\overline{F}=1-F$$
+and $$\overline{G}=1-G$$ and let $$\overline{\Delta}=1-\Delta$$.
+
+Under these assumptions, we now construct the typical failure model likelihood. Suppose we have failure model
+$$F_\theta$$ with density $$f_\theta$$. Then, under the assumptions, the likelihood can be written as
+
+$$L(\theta) = \prod_i f_\theta(U_i|X_i)^{\Delta_i}\overline{F}_\theta(U_i|X_i)^{\overline{\Delta_i}}$$
+
+The intuition for optimizing this expression is that, for patients with observed failure time $$U$$ ($$\Delta=1$$ means $$U_i=T_i$$),
+we increase the model density at that time. Otherwise, when $$\Delta=0$$ we only know that $$T > U$$ meaing we should
+maximize $$P_\theta(T > U|X) = 1 - P_\theta(T \leq U | X) = 1 - F_\theta(U|X) = \overline{F}_\theta(U|X)$$.
+
+
+
+
+
+
+
+
+
+
