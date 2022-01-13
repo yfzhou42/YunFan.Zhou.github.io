@@ -202,7 +202,10 @@ $$\begin{align*}
 \end{align*}
 $$
 
-For problems with more than two timesteps, one can define a game based on e.g. the summed Brier Score
+To implement the games, each model must be treated as a constant when appearing in the weights for the other
+model's loss during gradient computation.
+
+For problems with more than two timesteps, one can define a game based on e.g. the summed Brier Score:
 
 $$\begin{align*}
 	\ell_F(F_\theta;G_\theta) &= \sum_t BS_{G_\theta}(t;F_\theta) \quad \text{loss for F model}\\
@@ -215,13 +218,34 @@ $$
 			when an expectation is taken over the data distribution  
 - re-weighted estimators of these losses that allow computation under censoring
 
-Importantly, to implement the games appropriately, the models must be treated as constants when they are used
-for re-weighing in the other model's loss. For example, the summed BS game can be implemented just like the 
-first-try summed objective just by ensuring loss denominators are constant in the gradient computation.
 
 ## Theoretical Results
 * * * 
 
+The paper has two theoretical results concerning *stationary points*. Stationary points of games
+are where they stop: at such points, no player changes their parameters. They are the analog of minima
+in optimization problems.
+
+- **Theorem 1** When the loss used for each player's objective is proper, the games always have a stationary
+	point at the true failure and censoring distributions. This means that the games will not move
+		away from the true data distributions when they are reached.
+- **Theorem 2** In the case of Summed Brier Score for discrete failure and censoring distributions,
+	the stationary point at the true data distributions is unique.
+
+
+For both theorems, when we refer to a loss we mean those defined with respect to expectations over the samples from the true
+data distribution. 
+
+The first theorem holds for any proper loss, for example Brier Score(t), 
+Summed Brier Score,
+Negative Bernoulli Log Likelihood(t) (similar to BS but with negated log
+instead of square) and its summed variant, and some variants of AUC(t).
+Interestingly, common variants of Concordance are not proper, so we do not study
+games based on it.
+
+Though the second theorem is specifically for discrete time data distributions with matching 
+failure and censoring support, it can hold for continuous
+distributions under more assumptions.
 
 ## Experiments
 
