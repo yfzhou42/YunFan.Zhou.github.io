@@ -34,7 +34,7 @@ Brier Score (BS), Bernoulli Log Likelihood (BLL), and Calibration
 
 
 The approach we present, unlike the usual MLE, makes use of a censoring model
-(the distribution that causes missingness of times-to-event and is usually not modeled, see <a href="./survival.html">survival intro</a>)
+(the distribution that causes missingness of times-to-event is usually not modeled, see <a href="./survival.html">survival intro</a>)
 and plays a *game* between a *failure model player* and *censoring model player*.
 
 
@@ -75,7 +75,7 @@ $$BS(t;F_\theta) = \mathbb{E} \Big[ \Big( F_{\theta}(t|X) - 1[T \leq t] \Big) ^2
 
 Censoring makes it challenging to compute $$BS(t;F_\theta)$$.
 For patients censored before time t, we do not observe $$1[T \leq t]$$. However, if the true censoring CDF $$G$$
-were known, we could use re-weighting to estimate the BS:
+were known, we could use re-weighting to estimate the BS (derivation in the paper):
 
 $$\begin{align*}
 BS_G(t;F_\theta) &=  \mathbb{E} \Big[ 
@@ -88,12 +88,13 @@ $$
 
 Crucially, while this expectation equals the previous definition of $$BS(t;F_\theta)$$, Monte-Carlo estimates of it only require samples from the *observed data* $$X,U,\Delta$$.
 
-## Why can't we just optimize the inverse-weighted BS? 
+## Re-weighted BS Needs a $$G$$ estimate
 * * *
 
-What stops us from using the re-weighted BS as an objective for our $$F_\theta$$ model? Unfortunately the censoring distribution $$G$$ required in the estimates
+What stops us from using the re-weighted BS as an objective for our $$F_\theta$$ model? Unfortunately the 
+$$G$$ required in the estimates
 is the *true censoring distribution* rather than a model. But in practice, we do not know this distribution ahead of time 
-and must use a model $$G_\theta$$. Where does this model come from?
+and must use a model $$G_\theta$$, computing $$BS_{G_\theta}(t;F_\theta)$$ rather than $$BS_G(t;F_\theta)$$ Where does this model come from?
 
 
 **Quick recap**: we want to estimate $$F_\theta$$ with BS. The BS needs $$G$$ under censoring. We do not have $$G$$. So we can model
@@ -102,11 +103,12 @@ it with $$G_\theta$$ and then plug it into $$F_\theta$$'s objective. Which objec
 ## Where does $$G_\theta$$ come from?
 * * *
 
-Modeling the censoring distribution is itself a *censored survival task*: observed failures censor the censoring times!  Moreover,
-because $$G$$ shows up by computing probabilities, we care the the estimated model $$G_\theta$$ be calibrated.
+Modeling the censoring distribution is itself a *censored survival task* that mirrors the original problem: 
+observed failures censor the censoring times. We also care that our $$G_\theta$$ is calibrated
+because we need to use it for probabilities rather than just predictions.
 
-
-Well, since we already know that BS optimizes calibration, can we get our $$G_\theta$$ estimate using BS as an objective? To do this we would need to use the re-weighted BS for $$G_\theta$$. This is like the above re-weighted BS
+Since we already know that BS optimizes calibration, can use BS to estimate $$G_\theta$$?
+To do this we would need to use the re-weighted BS for $$G_\theta$$. This is like the above re-weighted BS
 but with the roles of $$F$$ and $$G$$ swapped (and $$\Delta$$ flipped):
 
 $$\begin{align*}
@@ -127,6 +129,13 @@ This leads to what we call the **inverse-weighting dilemma**:
 - $$G_\theta$$'s BS needs $$F$$, but we only have an $$F_\theta$$ model of questionable quality
 - with access only to these models, what can we say about optimizing $$F_\theta$$'s BS?
 
+
+## Simple Two-Timestep Model
+* * *
+For the remainder of the post, let us consider a two-timestep problem where $$T$$ and $$C$$ both only take values in $$\{1,2\}$$. In such discrete settings,
+the $$BS$$ at the last time step is equal to $$0$$ for any model so the only thing to optimize is $$BS(t=1)$$. This corresponds to the fact
+that there is only one parameter in each model.
+
 ## Resolving the Dilemma: First Attempt
 * * *
 
@@ -137,24 +146,17 @@ $$loss(t;F_\theta,G_\theta) = BS_{G_\theta}(t;F_\theta) + BS_{F_\theta}(t;G_\the
 
 
 This is what we first considered to be a possible solution to this problem. We now show that this does not work.
-
-For the remainder of the post, let us consider a two-timestep problem where $$T$$ and $$C$$ both only take values in $$\{1,2\}$$. In such discrete settings,
-the $$BS$$ at the last time step is equal to $$0$$ for any model so the only thing to optimize is $$BS(t=1)$$. This corresponds to the fact
-that there is only one parameter in each model.
-
 We show the loss contours of this optimization for $$loss(t=1;F_\theta,G_\theta)$$ with respect to each model's single parameter $$P_\theta(T=1)$$ and $$P_\theta(C=1)$$:
 
 
 
-<img src="assets/img/min_plot.png" alt="min plot" width="300"/>
-
-<img src="assets/img/key.png" alt="plot legend" width="300"/>
+<img src="assets/img/min_plot_legend.png" alt="min plot" width="300"/>
 
 
-Unfortunately, the solution to this optimization is not at the true failure and censoring distribution. 
-
-**In the rest of this post**, we present our solution to this problem, Inverse-Weighted Survival Games, which define an optimization that follows gradients to the right solution,
-which looks like this:
+We see that the solution to this optimization is not at the true failure and censoring distribution.
+This comes from the fact that $$BS_{G_\theta}(t;F_\theta)$$ is not a proper objective
+for $$G_\theta$$ and vice versa. **In the rest of this post**, we present our solution to this problem, Inverse-Weighted Survival Games, which define an optimization that follows gradients to the right solution. The gradient
+field for the $$BS(t=1)$$ game, defined below, looks like:
 
 <img src="assets/img/grad_plot.png" alt="grad plot" width="300"/>
 
@@ -164,9 +166,7 @@ which looks like this:
 * * *
 
 To keep things simple let us stick with the 2-timestep setting where each model
-only has one parameter. 
-
-Let's look again at the BS for $$F_\theta$$ and $$G_\theta$$, and replace the weights with models
+only has one parameter. Let's look again at the BS for $$F_\theta$$ and $$G_\theta$$, and replace the weights with models
 
 $$\begin{align*}
 BS_{G_\theta}(t;F_\theta) &=  \mathbb{E} \Big[ 
@@ -193,7 +193,8 @@ $$\begin{align*}
 \end{align*}
 $$
 
-The game is followed by having each model optimize only its loss:
+What makes this a *game* is that the loss function for each player depends on the parameters
+of both players, but each player can only optimize their loss with respect to their own parameters:
 
 $$\begin{align*}
 	\texttt{failure player}: &\min_{F_{\theta}} \ell_F(t;F_\theta;G_\theta)\\
@@ -201,7 +202,7 @@ $$\begin{align*}
 \end{align*}
 $$
 
-For problems with more than two timesteps, one can define e.g.
+For problems with more than two timesteps, one can define a game based on e.g. the summed Brier Score
 
 $$\begin{align*}
 	\ell_F(F_\theta;G_\theta) &= \sum_t BS_{G_\theta}(t;F_\theta) \quad \text{loss for F model}\\

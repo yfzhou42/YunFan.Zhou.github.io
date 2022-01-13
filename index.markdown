@@ -16,10 +16,16 @@ causal inference, and representation learning problems with a focus on machine l
 
 ## News
 
+* Fall 2021: *Learning Invariant Representations with Missing Data*
+(a full version) accepted to CLeaR (Causal Learning and Reasoning) 2022!
+
 * Fall 2021: [Learning Invariant Representations with Missing Data](https://arxiv.org/pdf/2112.00881.pdf) accepted to NeurIPS 2021 DistShift Workshop (on distribution shifts)!
 Work done as part of my internship at Apple Health AI.
 
-* Fall 2021: selected as a recipient of the NeurIPS 2021 Outstanding Reviewer Award! Meaningful to me since it was my first time reviewing. Glad to be a part of it!
+* Fall 2021: selected as a recipient of the NeurIPS 2021 Outstanding Reviewer Award. 
+<!--Meaningful to me since it was my first time reviewing.
+-->
+Glad to be a part of it!
 
 * Fall 2021: [Inverse-Weighted Survival Games](https://arxiv.org/pdf/2111.08175.pdf) accepted to NeurIPS 2021! 
 

@@ -10,6 +10,12 @@ permalink: publications.html
 
 Here's my [google scholar](https://scholar.google.fr/citations?hl=en&user=-oKlMZUAAAAJ&view_op=list_works&sortby=pubdate)
 
+* *Learning Invariant Representations with Missing Data* (full version). 
+CLeaR (Causal Learning and Reasoning) 2022.
+Work by myself\*, Jörn-Henrik Jacobsen, Olina Chau, Adriel Saporta, Aahlad Puli, Rajesh Ranganath, and Andrew C. Miller. Work done as
+part of my internship at Apple Health AI.
+
+
 * [Learning Invariant Representations with Missing Data](https://arxiv.org/pdf/2112.00881.pdf). NeurIPS 2021 DistShift Workshop. 
 Work by myself\*, Jörn-Henrik Jacobsen, Olina Chau, Adriel Saporta, Aahlad Puli, Rajesh Ranganath, and Andrew C. Miller. Work done as
 part of my internship at Apple Health AI.
