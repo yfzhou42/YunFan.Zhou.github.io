@@ -12,6 +12,10 @@ and about our recent NeurIPS 2021 work [Inverse-Weighted Survival Games](https:/
 with equal contribution from <a href="https://scholar.google.com/citations?user=WJnM24AAAAAJ&hl=en">Xintian Han</a> and 
 <a href="https://marikgoldstein.github.io/">myself</a>.
 
+This work presents a new training scheme for survival models that directly targets
+evaluations the people use in practice. and as a theoretical aside, corresponds to a joint
+estimator of the failure and censoring distribution that has not been previously studied.
+
 $$\begin{align*}
 	\texttt{failure player}: &\min_{F_{\theta}} \ell_F(F_\theta;G_\theta)\\
 	\texttt{censor player}:	 &\min_{G_{\theta}} \ell_G(G_\theta;F_\theta)
@@ -25,12 +29,14 @@ The work presents a new method, *IPCW (Inverse Probability of Censoring Weighted
 distributions, motivated by the following points:
 
 - Survival models are evaluated on criteria like 
-Brier Score (BS), Bernoulli Log Likelihood (BLL), and Calibration
+Brier Score (BS), Bernoulli Log Likelihood (BLL), and Calibration. These metrics
+are more conducive to decision-making than likelihood is.
 
 - In theory, Maximum Likelihood Estimation (MLE) for survival analysis is proper/consistent and asymptotically efficient
 
 - Instead, optimizing directly for the above evaluations can
 		improve performance on finite data in practice (while still mantaining some infinite-data properties of MLE)
+
 
 
 The approach we present, unlike the usual MLE, makes use of a censoring model
@@ -41,11 +47,11 @@ and plays a *game* between a *failure model player* and *censoring model player*
 ## Outline
 * * *
 
-- survival math setup 
-- Brier Score and how to estimate under censoring
-- challenges of directly optimizing Brier Score
-- present Brier games as an example of IPCW Games
-- summarize some theoretical and empirical results comparing the games against MLE 
+- Survival math setup 
+- Brier Score (BS) under censoring
+- BS hard to optimize directly
+- Present Brier games as an example of IPCW Games
+- Summarize some theoretical and empirical results comparing the games against MLE 
 
 
 ## Brief recap of survival setup
@@ -54,7 +60,8 @@ and plays a *game* between a *failure model player* and *censoring model player*
 For each patient $$X$$, 
 we are interesting in modeling the time-to-event (called the *failure time*) $$T|X$$ with CDF $$F$$.
 There is also a censoring time $$C|X$$ with CDF $$G$$ for each patient.
-Under right-censoring, we only observe $$X, U=\min(T,C)$$ and $$\Delta=1[T \leq C]$$ instead of $$T,C$$.
+Under right-censoring, we only observe $$(X,U,\Delta)$$ where $$U=\min(T,C)$$ and $$\Delta=1[T \leq C]$$ 
+instead of $$(X,T,C)$$.
 We assume i.i.d. data and random censoring $$T \perp C | X$$. Finally, let $$\overline{F}=1-F$$
 and $$\overline{G}=1-G$$ and let $$\overline{\Delta}=1-\Delta$$. For an intro to the typical MLE objective
 using this notation, <a href="./survival.html">see here</a>.
@@ -65,16 +72,17 @@ using this notation, <a href="./survival.html">see here</a>.
 
 ## Evaluating with Brier Score
 * * *
-Beyond likelihood, survival models are evaluated under metrics like 
+Though trained with likelihood, survival models are evaluated under metrics like 
 Concordance, Calibration, and Brier Score (BS). We focus on BS,
-which is motivated by the fact that it measures both discrimination and calibration.
+which measures both discrimination and calibration.
 BS picks a particular time $$t$$ and considers the classification problem of whether or not a datapoint fails by $$t$$. It does so
 by measuring the average squared error between the event status and modeled CDF $$F_{\theta}$$:
 
 $$BS(t;F_\theta) = \mathbb{E} \Big[ \Big( F_{\theta}(t|X) - 1[T \leq t] \Big) ^2 \Big]$$ 
 
-Censoring makes it challenging to compute $$BS(t;F_\theta)$$.
-For patients censored before time t, we do not observe $$1[T \leq t]$$. However, if the true censoring CDF $$G$$
+Training aside, censoring makes it challenging even *to estimate* $$BS(t;F_\theta)$$.
+This is because,
+for patients censored before time t, we do not observe $$1[T \leq t]$$. However, if the true censoring CDF $$G$$
 were known, we could use re-weighting to estimate the BS (derivation in the paper):
 
 $$\begin{align*}
@@ -86,26 +94,35 @@ BS_G(t;F_\theta) &=  \mathbb{E} \Big[
 \end{align*}
 $$
 
-Crucially, while this expectation equals the previous definition of $$BS(t;F_\theta)$$, Monte-Carlo estimates of it only require samples from the *observed data* $$X,U,\Delta$$.
+This re-weighting scheme traces back to survey methodology from the 1950s and has the intuition that,
+if an uncensored patient looks similar to patients who are likely to be censored, this uncensored point's
+contribution should be up-weighted to account for the expected number of missing censored points similar to them.
 
+Crucially, while this expectation equals the previous definition of $$BS(t;F_\theta)$$, Monte-Carlo estimates of it only require samples from the *observed data* $$X,U,\Delta$$ and not $$(T,C)$$.
 ## Re-weighted BS Needs a $$G$$ estimate
 * * *
 
 What stops us from using the re-weighted BS as an objective for our $$F_\theta$$ model? Unfortunately the 
 $$G$$ required in the estimates
 is the *true censoring distribution* rather than a model. But in practice, we do not know this distribution ahead of time 
-and must use a model $$G_\theta$$, computing $$BS_{G_\theta}(t;F_\theta)$$ rather than $$BS_G(t;F_\theta)$$ Where does this model come from?
+and must use a model $$G_\theta$$, computing $$BS_{G_\theta}(t;F_\theta)$$ rather than $$BS_G(t;F_\theta)$$.
+But, where does this model come from?
 
 
-**Quick recap**: we want to estimate $$F_\theta$$ with BS. The BS needs $$G$$ under censoring. We do not have $$G$$. So we can model
-it with $$G_\theta$$ and then plug it into $$F_\theta$$'s objective. Which objective do we use for $$G_\theta$$?
+## Quick recap 
+* * * 
+We want to estimate survival model $$F_\theta$$ by minimizing BS since it measures 
+both calibration and discrimination. Under censoring, the BS needs the true censoring distribution $$G$$.
+We do not have $$G$$. So we can model
+it with $$G_\theta$$ and then plug it into $$F_\theta$$'s objective. But, which objective do we use for $$G_\theta$$?
 
 ## Where does $$G_\theta$$ come from?
 * * *
 
 Modeling the censoring distribution is itself a *censored survival task* that mirrors the original problem: 
-observed failures censor the censoring times. We also care that our $$G_\theta$$ is calibrated
-because we need to use it for probabilities rather than just predictions.
+observed failures censor the censoring times because we do not observe $$C$$ when $$T \leq C$$. 
+We also care that our censoring model $$G_\theta$$ be calibrated
+because we need to use it to produce probabilities rather than just predictions.
 
 Since we already know that BS optimizes calibration, can use BS to estimate $$G_\theta$$?
 To do this we would need to use the re-weighted BS for $$G_\theta$$. This is like the above re-weighted BS
@@ -149,17 +166,21 @@ This is what we first considered to be a possible solution to this problem. We n
 We show the loss contours of this optimization for $$loss(t=1;F_\theta,G_\theta)$$ with respect to each model's single parameter $$P_\theta(T=1)$$ and $$P_\theta(C=1)$$:
 
 
-
-<img src="assets/img/min_plot_legend.png" alt="min plot" width="300"/>
-
+<p style="text-align:center;">
+<img src="assets/img/min_plot_legend.png" alt="min plot" width="350"/>
+</p>
 
 We see that the solution to this optimization is not at the true failure and censoring distribution.
 This comes from the fact that $$BS_{G_\theta}(t;F_\theta)$$ is not a proper objective
-for $$G_\theta$$ and vice versa. **In the rest of this post**, we present our solution to this problem, Inverse-Weighted Survival Games, which define an optimization that follows gradients to the right solution. The gradient
+for $$G_\theta$$ and vice versa. 
+
+**In the rest of this post**, we present our solution to this problem, Inverse-Weighted Survival Games, 
+which define an optimization that *follows gradients to the right solution (!)*. The gradient
 field for the $$BS(t=1)$$ game, defined below, looks like:
 
-<img src="assets/img/grad_plot.png" alt="grad plot" width="300"/>
-
+<p style="text-align:center;">
+<img src="assets/img/grad_plot.png" alt="grad plot" width="350" align="center"/>
+</p>
 
 
 ## Inverse-Weighted Survival Games
@@ -251,10 +272,73 @@ distributions under more assumptions.
 
 * * * 
 
+To show that the theorems are useful in practice, we investigate IPCW games 
+on simulations, a semi-simulation based on MNIST, and real data on cancer and critically-ill hospital patients.
+We include the MNIST results and some cancer results here. 
+The rest can be found [in the paper](https://arxiv.org/pdf/2111.08175.pdf).
 
+### Survival MNIST
+
+[Survival-MNIST](https://k-d-w.org/blog/2019/07/survival-analysis-for-deep-learning/)
+draws times conditionally on MNIST label
+$$Y$$. This means digits define risk groups (for event to happen sooner vs later) and $$T \perp X | Y$$. 
+Times within a digit are i.i.d. The model only sees the image pixels $$X$$ as covariates so it must learn to 
+classify digits (risk groups) to model times. We follow [X-CAL](https://arxiv.org/pdf/2101.05346.pdf) 
+and use Gamma times: $$T ∼ Gamma(mean = 10(Y + 1))$$. We set the variance constant to $$0.05$$. 
+Lower digit labels $$Y$$ yield earlier event times. $$C$$ is drawn similarly but with mean $$9.9(Y + 1)$$. 
+Each random seed draws a new dataset. We use categorical models that model times as falling into
+one of 50 ordinal bins.
+<p style="text-align:center;">
+<img src="assets/img/results_mnist.png" alt="grad plot" width="900" align="center"/>
+</p>
+Since this is a semi-simulation, we have the true failure times available and can measure 
+uncensored BS and uncensored Bernoulli Log Likelihood (BLL) which is like BS but with log loss instead
+of squared error. We also report concordance and the traditional NLL:
+- The blue curve represents models trained with NLL
+- The orange curve represents models trained with BS games
+- The green curve represents models trained with BLL games
+- The X axis shows the number of training points used to produce the models whose test evaluation is shown in the plot.
+
+What we see in the plots is that the games bring the test set BS loss down using smaller amounts of training data
+than is necessary for the traditional NLL-trained model. The games bring up concordance faster than the NLL model,
+and we also see that better test NLL does not directly correspond to better test BS.
+
+###  METABRIC
+
+We also study survival times of patients in the 
+Molecular Taxonomy of Breast Cancer International Consortium (METABRIC).
+The plots are similar, except since it is real data, there are no ground truth times available for 
+censored patients. This means that we cannot report uncensored BS or BLL. 
+Following [Kvamme et al.](https://arxiv.org/pdf/1907.00825.pdf),
+we use the Kaplan-Meier weighted estimates of these test metrics.
+<p style="text-align:center;">
+<img src="assets/img/results_metabric.png" alt="grad plot" width="900" align="center"/>
+</p>
+The results are similar, with the game methods needing less data to bring down the test set BS and BLL,
+bring up the concordance, and in this case also bring down the NLL even though they do not optimize for it directly.
+
+### Conclusion
+
+As we have seen, when BS is valued as an evaluation of survival models, it should be used directly as 
+a training objective. However, this does not come without challenges, as it is necessary to re-weight 
+metrics like BS by a model of the censoring distribution. To tackle the problem of where this censoring model
+comes from, we present a game method that uses the failure and censoring model in re-weighting estimates of
+each other's training objectives. The result of these games are failure models that:
+- like NLL, produce the true distributions with infinite data. 
+- unlike NLL, based on the empirical evaluations explored in the work, produce
+models with better BS, BLL, and Concordance in the finite-sample case.
+
+
+
+
+
+
+
+
+
+<!--
 ![conc vs nll](assets/img/conc_vs_nll.png)
-
-
+-->
 
 
 
