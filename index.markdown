@@ -16,6 +16,9 @@ causal inference, and representation learning problems with a focus on machine l
 
 ## News
 
+* Summer 2022: *Survival Mixture Density Networks*
+accepted to Machine Learning for Healthcare Conference!
+
 * Spring 2022: *Learning Invariant Representations with Missing Data*
 (a full version) accepted to CLeaR (Causal Learning and Reasoning) 2022!
 
