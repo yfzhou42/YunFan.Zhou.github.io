@@ -14,7 +14,7 @@ Here's my [google scholar](https://scholar.google.fr/citations?hl=en&user=-oKlMZ
 Machine Learning for Healthcare Conference. PMLR, 2022.
 Work by Xintian Han\*, myself, and Rajesh Ranganath.
 
-* *Learning Invariant Representations with Missing Data* (full version). 
+* [Learning Invariant Representations with Missing Data](https://arxiv.org/pdf/2112.00881.pdf) (full version). 
 CLeaR (Causal Learning and Reasoning) 2022.
 Work by myself\*, Jörn-Henrik Jacobsen, Olina Chau, Adriel Saporta, Aahlad Puli, Rajesh Ranganath, and Andrew C. Miller. Work done as
 part of my internship at Apple Health AI.
