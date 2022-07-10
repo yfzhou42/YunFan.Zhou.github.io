@@ -7,8 +7,12 @@
 show_downloads: false
 title: mark goldstein
 
-logo: /assets/img/dec2021.jpeg
+
+logo: /assets/img/yz.jpg
 description: >- # this means to ignore newlines until "baseurl:"
+    
+#logo: /assets/img/dec2021.jpeg
+#description: >- # this means to ignore newlines until "baseurl:"
     
 #logo: /assets/img/setar_cropped_sq.png
 #description: >- # this means to ignore newlines until "baseurl:"
