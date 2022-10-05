@@ -14,8 +14,8 @@ some commented out stuff that wont show up
 
 ## News
 
-* __Sep 2022__ Our paper **Declarative Specification for Unstructured Mesh Editing Algorithms** is conditionally accepted at SIGGRAPH ASIA 2023!
-* __Aug 2022__ I finished my **Adobe** summer internship on **GPU Mesh Decimation for Interactive Applications**. We achieved at least 15x speed-ups for mesh decimation algorithms!
+* __Sep 2022__ : Our paper **Declarative Specification for Unstructured Mesh Editing Algorithms** is conditionally accepted at SIGGRAPH ASIA 2023!
+* __Aug 2022__ : I finished my **Adobe** summer internship on **GPU Mesh Decimation for Interactive Applications**. We achieved at least 15x speed-ups for mesh decimation algorithms!
 
 ## Some other heading
 

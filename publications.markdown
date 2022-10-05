@@ -11,7 +11,7 @@ permalink: publications.html
 
 Here's my [google scholar](https://scholar.google.com/citations?user=qAVbJqUAAAAJ&hl=en)
 
-* [Declarative Specification for Unstructured Mesh Editing Algorithms]. SIGGRAPH ASIA 2023. 
+* [Declarative Specification for Unstructured Mesh Editing Algorithms](https://cims.nyu.edu/gcl/papers/2022-WildMeshingToolkit.pdf). SIGGRAPH ASIA 2023. 
 Zhongshi Jiang\*, Yixin Hu, Jiacheng Dai, myself, \\
 Jeremie Dumas, Qingnan Zhou,\\
 Denis Zorin, Daniele Panozzo, Teseo Schneider
