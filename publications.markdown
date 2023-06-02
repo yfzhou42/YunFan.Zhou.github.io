@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: publication
 title: generic
 permalink: publications.html
 ---
